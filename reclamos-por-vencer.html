@@ -5,28 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Reclamos por vencer | RED Intelfon</title>
   <style>
-    :root{
-      --brand:#9f1239;
-      --brand-soft:#fff1f2;
-      --text:#0f172a;
-      --muted:#64748b;
-      --line:#e2e8f0;
-      --bg:#f8fafc;
-      --card:#ffffff;
-      --blue:#2563eb;
-      --amber:#b45309;
-      --green:#15803d;
-      --red:#b91c1c;
-    }
-    *{box-sizing:border-box}
-    body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
-    .wrap{max-width:1280px;margin:0 auto;padding:28px 18px 40px}
-    .hero{background:linear-gradient(135deg,#881337,#9f1239);color:#fff;border-radius:18px;padding:24px 26px;display:flex;justify-content:space-between;gap:20px;align-items:center;box-shadow:0 10px 30px rgba(15,23,42,.12)}
-    .hero-left{display:flex;align-items:center;gap:16px}.logo{width:54px;height:54px;border-radius:50%;object-fit:cover;background:#fff}
-    h1{margin:0;font-size:26px;line-height:1.15}.subtitle{margin:7px 0 0;color:#fecdd3;font-size:14px}.cut{font-size:12px;color:#fecdd3;text-align:right}
-    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
-    .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px}.card-label{font-size:10px;font-weight:800;letter-spacing:.55px;text-transform:uppercase;color:var(--muted)}.card-value{font-size:30px;font-weight:850;margin-top:5px}.gt .card-value{color:var(--brand)}.sv .card-value{color:var(--blue)}
-    .toolbar{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:10px;margin:0 0 14px}.control{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--text);outline:none}.control:focus{border-color:#94a3b8}
+    :root{--brand:#9f1239;--text:#0f172a;--muted:#64748b;--line:#e2e8f0;--bg:#f8fafc;--blue:#2563eb;--amber:#b45309;--green:#15803d;--red:#b91c1c}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+    .wrap{max-width:1280px;margin:0 auto;padding:28px 18px 40px}.hero{background:linear-gradient(135deg,#881337,#9f1239);color:#fff;border-radius:18px;padding:24px 26px;display:flex;justify-content:space-between;gap:20px;align-items:center;box-shadow:0 10px 30px rgba(15,23,42,.12)}
+    .hero-left{display:flex;align-items:center;gap:16px}.logo{width:54px;height:54px;border-radius:50%;object-fit:cover;background:#fff}h1{margin:0;font-size:26px;line-height:1.15}.subtitle{margin:7px 0 0;color:#fecdd3;font-size:14px}.cut{font-size:12px;color:#fecdd3;text-align:right}
+    .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:18px 0}.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px}.card-label{font-size:10px;font-weight:800;letter-spacing:.55px;text-transform:uppercase;color:var(--muted)}.card-value{font-size:30px;font-weight:850;margin-top:5px}.country-card .card-value{color:var(--brand)}
+    .toolbar{display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px;margin:0 0 14px}.control{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--text);outline:none}.control:focus{border-color:#94a3b8}
     .panel{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:980px}th{background:#f1f5f9;color:#475569;font-size:10px;text-transform:uppercase;letter-spacing:.45px;text-align:left;padding:11px 12px;border-bottom:1px solid var(--line)}td{padding:12px;border-bottom:1px solid #eef2f7;font-size:12px;vertical-align:top}tr:last-child td{border-bottom:0}.case{font-weight:800}.client{margin-top:3px;color:var(--muted)}.pill{display:inline-block;padding:4px 8px;border-radius:999px;font-size:10px;font-weight:800}.pill.gt{background:#fff1f2;color:#9f1239}.pill.sv{background:#eff6ff;color:#1d4ed8}.priority{font-weight:800}.priority.alta{color:var(--red)}.priority.media{color:var(--amber)}.priority.normal{color:var(--green)}
     .empty,.error,.loading{padding:34px;text-align:center;color:var(--muted)}.error{color:var(--red)}.foot{margin-top:12px;color:#94a3b8;font-size:11px;text-align:center}
     @media(max-width:820px){.hero{align-items:flex-start;flex-direction:column}.cut{text-align:left}.cards{grid-template-columns:1fr}.toolbar{grid-template-columns:1fr 1fr}.toolbar .search{grid-column:1/-1}}
@@ -38,22 +22,20 @@
       <div class="hero-left">
         <img class="logo" src="logo.png" alt="RED Intelfon" />
         <div>
-          <h1>Reclamos próximos a vencer</h1>
-          <p class="subtitle">Detalle operativo del corte enviado en el resumen diario de SLA</p>
+          <h1 id="titulo">Reclamos próximos a vencer</h1>
+          <p class="subtitle" id="subtitulo">Detalle operativo del corte enviado en el resumen diario de SLA</p>
         </div>
       </div>
       <div class="cut" id="fechaCorte">Cargando corte…</div>
     </section>
 
     <section class="cards">
-      <div class="card"><div class="card-label">Total por vencer</div><div class="card-value" id="total">—</div></div>
-      <div class="card gt"><div class="card-label">Guatemala</div><div class="card-value" id="totalGT">—</div></div>
-      <div class="card sv"><div class="card-label">El Salvador</div><div class="card-value" id="totalSV">—</div></div>
+      <div class="card country-card"><div class="card-label" id="paisLabel">País</div><div class="card-value" id="paisNombre">—</div></div>
+      <div class="card"><div class="card-label">Reclamos por vencer</div><div class="card-value" id="total">—</div></div>
     </section>
 
     <section class="toolbar">
       <input id="buscar" class="control search" type="search" placeholder="Buscar por caso, cliente o agente…" />
-      <select id="pais" class="control"><option value="">Todos los países</option><option value="GT">Guatemala</option><option value="SV">El Salvador</option></select>
       <select id="agente" class="control"><option value="">Todos los agentes</option></select>
       <select id="prioridad" class="control"><option value="">Toda prioridad</option><option value="alta">Alta</option><option value="media">Media</option><option value="normal">Normal</option></select>
     </section>
@@ -62,11 +44,7 @@
       <div id="estado" class="loading">Cargando reclamos por vencer…</div>
       <div class="table-wrap" id="tablaWrap" hidden>
         <table>
-          <thead>
-            <tr>
-              <th>Caso / Cliente</th><th>País</th><th>Etapa actual</th><th>Agente</th><th>Fecha límite SLA</th><th>Tiempo restante</th><th>Prioridad</th>
-            </tr>
-          </thead>
+          <thead><tr><th>Caso / Cliente</th><th>País</th><th>Etapa actual</th><th>Agente</th><th>Fecha límite SLA</th><th>Tiempo restante</th><th>Prioridad</th></tr></thead>
           <tbody id="tbody"></tbody>
         </table>
       </div>
@@ -75,80 +53,38 @@
   </main>
 
   <script>
-    const API = 'https://erjmqjcjggxbktxcogkm.supabase.co/functions/v1/sla-por-vencer-detalle';
-    const params = new URLSearchParams(location.search);
-    const token = params.get('token');
-    let rows = [];
+    const API='https://erjmqjcjggxbktxcogkm.supabase.co/functions/v1/sla-por-vencer-detalle';
+    const params=new URLSearchParams(location.search);
+    const token=params.get('token');
+    const paisParam=(params.get('pais')||'').toUpperCase();
+    const paisFijo=['GT','SV'].includes(paisParam)?paisParam:null;
+    let rows=[];
+    const $=id=>document.getElementById(id);
+    const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const nombrePais=p=>p==='GT'?'Guatemala':p==='SV'?'El Salvador':p||'—';
 
-    const $ = id => document.getElementById(id);
-    const esc = s => String(s ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    function fmtFecha(v){if(!v)return'—';const d=new Date(v);if(Number.isNaN(d.getTime()))return v;return new Intl.DateTimeFormat('es-GT',{dateStyle:'medium',timeStyle:'short',timeZone:'America/Guatemala'}).format(d)}
+    function fmtRestante(h){const n=Number(h);if(!Number.isFinite(n))return'—';if(n<=0)return'0 h';if(n<24)return`${Math.round(n)} h`;const dias=Math.floor(n/24),horas=Math.round(n%24);return`${dias} d ${horas} h`}
+    function prioridadCalc(r){const p=String(r.prioridad||'').toLowerCase();if(p)return p;const h=Number(r.horas_restantes);if(Number.isFinite(h))return h<=24?'alta':h<=48?'media':'normal';return'normal'}
 
-    function fmtFecha(v){
-      if(!v) return '—';
-      const d = new Date(v);
-      if(Number.isNaN(d.getTime())) return v;
-      return new Intl.DateTimeFormat('es-GT',{dateStyle:'medium',timeStyle:'short',timeZone:'America/Guatemala'}).format(d);
-    }
-    function fmtRestante(h){
-      const n = Number(h);
-      if(!Number.isFinite(n)) return '—';
-      if(n <= 0) return '0 h';
-      if(n < 24) return `${Math.round(n)} h`;
-      const dias = Math.floor(n/24), horas = Math.round(n%24);
-      return `${dias} d ${horas} h`;
-    }
-    function prioridadCalc(r){
-      const p = String(r.prioridad || '').toLowerCase();
-      if(p) return p;
-      const h = Number(r.horas_restantes);
-      if(Number.isFinite(h)) return h <= 24 ? 'alta' : h <= 48 ? 'media' : 'normal';
-      return 'normal';
-    }
     function render(){
-      const q = $('buscar').value.trim().toLowerCase();
-      const pais = $('pais').value;
-      const agente = $('agente').value;
-      const prioridad = $('prioridad').value;
-      const filtered = rows.filter(r=>{
-        const hay = `${r.case_id||''} ${r.cliente||''} ${r.agente||''}`.toLowerCase();
-        return (!q || hay.includes(q)) && (!pais || r.pais===pais) && (!agente || r.agente===agente) && (!prioridad || prioridadCalc(r)===prioridad);
-      });
-      $('tbody').innerHTML = filtered.map(r=>{
-        const pr = prioridadCalc(r);
-        const paisLabel = r.pais==='GT' ? 'Guatemala' : r.pais==='SV' ? 'El Salvador' : r.pais;
-        return `<tr>
-          <td><div class="case">${esc(r.case_id)}</div><div class="client">${esc(r.cliente || 'No informado')}</div></td>
-          <td><span class="pill ${String(r.pais||'').toLowerCase()}">${esc(paisLabel)}</span></td>
-          <td>${esc(r.etapa || '—')}</td>
-          <td>${esc(r.agente || 'No asignado')}</td>
-          <td>${esc(r.fecha_fin_sla_text || fmtFecha(r.fecha_fin_sla))}</td>
-          <td>${esc(fmtRestante(r.horas_restantes))}</td>
-          <td><span class="priority ${esc(pr)}">${pr==='alta'?'Alta':pr==='media'?'Media':'Normal'}</span></td>
-        </tr>`;
-      }).join('');
-      $('estado').hidden = filtered.length > 0;
-      if(!filtered.length){ $('estado').className='empty'; $('estado').textContent='No hay reclamos que coincidan con los filtros.'; }
-      $('tablaWrap').hidden = filtered.length === 0;
+      const q=$('buscar').value.trim().toLowerCase(),agente=$('agente').value,prioridad=$('prioridad').value;
+      const filtered=rows.filter(r=>{const hay=`${r.case_id||''} ${r.cliente||''} ${r.agente||''}`.toLowerCase();return(!q||hay.includes(q))&&(!agente||r.agente===agente)&&(!prioridad||prioridadCalc(r)===prioridad)});
+      $('tbody').innerHTML=filtered.map(r=>{const pr=prioridadCalc(r);return`<tr><td><div class="case">${esc(r.case_id)}</div><div class="client">${esc(r.cliente||'No informado')}</div></td><td><span class="pill ${String(r.pais||'').toLowerCase()}">${esc(nombrePais(r.pais))}</span></td><td>${esc(r.etapa||'—')}</td><td>${esc(r.agente||'No asignado')}</td><td>${esc(r.fecha_fin_sla_text||fmtFecha(r.fecha_fin_sla))}</td><td>${esc(fmtRestante(r.horas_restantes))}</td><td><span class="priority ${esc(pr)}">${pr==='alta'?'Alta':pr==='media'?'Media':'Normal'}</span></td></tr>`}).join('');
+      $('estado').hidden=filtered.length>0;if(!filtered.length){$('estado').className='empty';$('estado').textContent='No hay reclamos que coincidan con los filtros.'}$('tablaWrap').hidden=filtered.length===0;
     }
 
     async function init(){
-      if(!token){ $('estado').className='error'; $('estado').textContent='El enlace no contiene un token de consulta válido.'; return; }
+      if(!token){$('estado').className='error';$('estado').textContent='El enlace no contiene un token de consulta válido.';return}
+      if(!paisFijo){$('estado').className='error';$('estado').textContent='El enlace debe indicar el país: GT o SV.';return}
       try{
-        const res = await fetch(`${API}?token=${encodeURIComponent(token)}`, {cache:'no-store'});
-        const data = await res.json();
-        if(!res.ok) throw new Error(data.error || 'No fue posible cargar el detalle.');
-        rows = Array.isArray(data.detalle) ? data.detalle : [];
-        $('total').textContent = data.snapshot?.total ?? rows.length;
-        $('totalGT').textContent = data.snapshot?.total_gt ?? rows.filter(r=>r.pais==='GT').length;
-        $('totalSV').textContent = data.snapshot?.total_sv ?? rows.filter(r=>r.pais==='SV').length;
-        $('fechaCorte').textContent = `Corte: ${fmtFecha(data.snapshot?.fecha_corte)}`;
-        const agentes=[...new Set(rows.map(r=>r.agente).filter(Boolean))].sort((a,b)=>String(a).localeCompare(String(b)));
-        $('agente').innerHTML='<option value="">Todos los agentes</option>'+agentes.map(a=>`<option value="${esc(a)}">${esc(a)}</option>`).join('');
-        render();
-      }catch(e){ $('estado').className='error'; $('estado').textContent=e.message || 'No fue posible cargar el detalle.'; }
+        const res=await fetch(`${API}?token=${encodeURIComponent(token)}`,{cache:'no-store'});const data=await res.json();if(!res.ok)throw new Error(data.error||'No fue posible cargar el detalle.');
+        const allRows=Array.isArray(data.detalle)?data.detalle:[];rows=allRows.filter(r=>r.pais===paisFijo);
+        const pais=nombrePais(paisFijo);$('titulo').textContent=`Reclamos próximos a vencer — ${pais}`;$('subtitulo').textContent=`Detalle exclusivo de ${pais} para el corte del resumen diario de SLA`;$('paisLabel').textContent='País';$('paisNombre').textContent=pais;$('total').textContent=rows.length;$('fechaCorte').textContent=`Corte: ${fmtFecha(data.snapshot?.fecha_corte)}`;
+        const agentes=[...new Set(rows.map(r=>r.agente).filter(Boolean))].sort((a,b)=>String(a).localeCompare(String(b)));$('agente').innerHTML='<option value="">Todos los agentes</option>'+agentes.map(a=>`<option value="${esc(a)}">${esc(a)}</option>`).join('');render();
+      }catch(e){$('estado').className='error';$('estado').textContent=e.message||'No fue posible cargar el detalle.'}
     }
-    ['buscar','pais','agente','prioridad'].forEach(id=>$(id).addEventListener(id==='buscar'?'input':'change',render));
-    init();
+    ['buscar','agente','prioridad'].forEach(id=>$(id).addEventListener(id==='buscar'?'input':'change',render));init();
   </script>
 </body>
 </html>
