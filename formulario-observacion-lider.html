@@ -5,247 +5,36 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Observación del líder — SLA</title>
 <style>
-:root{color-scheme:light;--body-bg:linear-gradient(180deg,#ccfbf1 0%,#f0fdfa 55%,#cffafe 100%);--card-bg:#ffffff;--soft-bg:#f0fdfa;--border:#e2e8f0;--text:#172033;--muted:#64748b;--primary:#0d9488;--primary-hover:#0f766e;--observation:#0d9488;--shadow:0 10px 28px rgba(15,23,42,.09);}
-html[data-theme="dark"]{color-scheme:dark;--body-bg:linear-gradient(180deg,#0f2e2b 0%,#0f172a 55%,#0b2530 100%);--card-bg:#172033;--soft-bg:#1e293b;--border:#334155;--text:#f8fafc;--muted:#94a3b8;--primary:#14b8a6;--primary-hover:#2dd4bf;--observation:#2dd4bf;--shadow:0 10px 30px rgba(0,0,0,.35);}
-*{box-sizing:border-box}
-body{margin:0;min-height:100vh;background:var(--body-bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;}
-button,input,textarea,select{font:inherit}
-.header{background:var(--primary);border-bottom:1px solid rgba(0,0,0,.06)}
-.header-inner{width:min(100% - 32px,720px);min-height:78px;margin:auto;display:flex;align-items:center;justify-content:space-between}
-.brand{display:flex;align-items:center;gap:12px}
-.brand-logo-wrap{width:44px;height:44px;border-radius:50%;background:#ffffff;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.15)}
-.brand-logo{width:36px;height:36px;border-radius:50%;object-fit:cover;display:block}
-.brand-name{margin:0;font-size:15px;font-weight:800;color:#ffffff}
-.brand-subtitle{margin:2px 0 0;color:rgba(255,255,255,.85);font-size:11px}
-.container{width:min(100% - 32px,720px);margin:22px auto 50px}
-.card{margin-bottom:16px;padding:20px;border:1px solid var(--border);border-radius:12px;background:var(--card-bg);box-shadow:var(--shadow)}
-.card-title{margin:0 0 13px;display:flex;align-items:center;gap:8px;font-size:16px;font-weight:800}
-.client-name{margin:0 0 5px;font-size:15px;font-weight:800;line-height:1.4}
-.process-state{margin:0;color:var(--muted);font-size:13px}
-.observation{padding:13px 15px;border-left:4px solid var(--observation);border-radius:0 7px 7px 0;background:var(--soft-bg)}
-.observation-meta{margin:0 0 7px;color:var(--observation);font-size:12px;font-weight:800;text-transform:uppercase}
-.observation-text{margin:0;color:var(--text);font-size:14px;font-weight:700;line-height:1.55;white-space:pre-wrap}
-.feedback-list{display:grid;gap:12px;margin-bottom:6px}
-.feedback-item{padding:13px 15px;border-left:4px solid #2dd4bf;border-radius:0 7px 7px 0;background:var(--soft-bg)}
-.feedback-agent-item{padding:13px 15px;border-left:4px solid #2563eb;border-radius:0 7px 7px 0;background:#eff6ff}
-.feedback-meta{margin:0 0 7px;color:#0d9488;font-size:12px;font-weight:800}
-.feedback-agent-meta{margin:0 0 7px;color:#1d4ed8;font-size:12px;font-weight:800}
-.feedback-text{margin:0;color:var(--text);font-size:14px;font-weight:700;line-height:1.55;white-space:pre-wrap}
-.feedback-reply{margin-top:9px;padding:10px 12px;border-left:3px solid #94a3b8;border-radius:0 6px 6px 0;background:var(--card-bg)}
-.feedback-reply-meta{margin:0 0 5px;color:#64748b;font-size:11px;font-weight:800;text-transform:uppercase}
-.feedback-reply-text{margin:0;color:var(--text);font-size:13px;line-height:1.5;white-space:pre-wrap}
-.empty{color:var(--muted);font-size:13px}
-.form-group{margin-top:17px}
-.label{display:block;margin-bottom:7px;color:var(--muted);font-size:13px;font-weight:700}
-.input,.textarea,.select{width:100%;border:1px solid var(--border);border-radius:8px;background:var(--soft-bg);color:var(--text);outline:none;transition:border-color 150ms ease,box-shadow 150ms ease}
-.input,.select{height:46px;padding:0 13px}
-.textarea{min-height:120px;padding:13px;resize:vertical;line-height:1.55}
-.input:focus,.textarea:focus,.select:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(13,148,136,.14)}
-.submit-button{min-height:46px;margin-top:16px;padding:0 20px;border:0;border-radius:8px;background:var(--primary);color:#fff;font-weight:800;cursor:pointer}
-.submit-button:hover{background:var(--primary-hover)}
-.submit-button:disabled{opacity:.65;cursor:wait}
-.message{display:none;margin-top:14px;padding:11px 13px;border-radius:8px;font-size:13px;font-weight:700}
-.message.success{display:block;border:1px solid #86efac;background:#f0fdf4;color:#166534}
-.message.error{display:block;border:1px solid #fecaca;background:#fef2f2;color:#b91c1c}
-.loading{padding:30px;text-align:center;color:var(--muted)}
-.hidden{display:none!important}
-@media(max-width:600px){.container{width:min(100% - 22px,720px);margin-top:14px}.header-inner{width:min(100% - 22px,720px)}.card{padding:17px}.submit-button{width:100%}}
+:root{color-scheme:light;--body-bg:linear-gradient(180deg,#ccfbf1 0%,#f0fdfa 55%,#cffafe 100%);--card-bg:#fff;--soft-bg:#f0fdfa;--border:#e2e8f0;--text:#172033;--muted:#64748b;--primary:#0d9488;--primary-hover:#0f766e;--shadow:0 10px 28px rgba(15,23,42,.09)}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:var(--body-bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input,textarea,select{font:inherit}.header{background:var(--primary)}.header-inner{width:min(100% - 32px,720px);min-height:78px;margin:auto;display:flex;align-items:center}.brand{display:flex;align-items:center;gap:12px}.brand-logo-wrap{width:44px;height:44px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center}.brand-logo{width:36px;height:36px;border-radius:50%;object-fit:cover}.brand-name{margin:0;font-size:15px;font-weight:800;color:#fff}.brand-subtitle{margin:2px 0 0;color:rgba(255,255,255,.85);font-size:11px}.container{width:min(100% - 32px,720px);margin:22px auto 50px}.card{margin-bottom:16px;padding:20px;border:1px solid var(--border);border-radius:12px;background:var(--card-bg);box-shadow:var(--shadow)}.card-title{margin:0 0 13px;font-size:16px;font-weight:800}.client-name{margin:0 0 5px;font-size:15px;font-weight:800}.process-state{margin:0;color:var(--muted);font-size:13px}.feedback-list{display:grid;gap:12px}.feedback-item{padding:13px 15px;border-left:4px solid #2dd4bf;border-radius:0 7px 7px 0;background:var(--soft-bg)}.feedback-agent-item{padding:13px 15px;border-left:4px solid #2563eb;border-radius:0 7px 7px 0;background:#eff6ff}.feedback-meta{margin:0 0 7px;color:#0d9488;font-size:12px;font-weight:800}.feedback-agent-meta{margin:0 0 7px;color:#1d4ed8;font-size:12px;font-weight:800}.feedback-text{margin:0;font-size:14px;font-weight:700;line-height:1.55;white-space:pre-wrap}.feedback-reply{margin-top:9px;padding:10px 12px;border-left:3px solid #94a3b8;background:#fff}.feedback-reply-meta{margin:0 0 5px;color:#64748b;font-size:11px;font-weight:800}.feedback-reply-text{margin:0;font-size:13px;line-height:1.5;white-space:pre-wrap}.observation{padding:13px 15px;border-left:4px solid var(--primary);background:var(--soft-bg)}.observation-meta{margin:0 0 7px;color:var(--primary);font-size:12px;font-weight:800}.observation-text{margin:0;font-size:14px;font-weight:700;white-space:pre-wrap}.form-group{margin-top:17px}.label{display:block;margin-bottom:7px;color:var(--muted);font-size:13px;font-weight:700}.textarea,.select{width:100%;border:1px solid var(--border);border-radius:8px;background:var(--soft-bg);color:var(--text);outline:none}.select{height:46px;padding:0 13px}.textarea{min-height:120px;padding:13px;resize:vertical;line-height:1.55}.submit-button{min-height:46px;margin-top:16px;padding:0 20px;border:0;border-radius:8px;background:var(--primary);color:#fff;font-weight:800;cursor:pointer}.submit-button:hover{background:var(--primary-hover)}.submit-button:disabled{opacity:.65;cursor:wait}.message{display:none;margin-top:14px;padding:11px 13px;border-radius:8px;font-size:13px;font-weight:700}.message.success{display:block;border:1px solid #86efac;background:#f0fdf4;color:#166534}.message.error{display:block;border:1px solid #fecaca;background:#fef2f2;color:#b91c1c}.loading{padding:30px;text-align:center;color:var(--muted)}.empty{color:var(--muted);font-size:13px}.hidden{display:none!important}@media(max-width:600px){.container,.header-inner{width:min(100% - 22px,720px)}.card{padding:17px}.submit-button{width:100%}}
 </style>
 </head>
 <body>
-<header class="header"><div class="header-inner">
-<div class="brand"><div class="brand-logo-wrap"><img src="logo.png" alt="RED" class="brand-logo"></div><div><p class="brand-name">Red Intelfon</p><p class="brand-subtitle">Observación de caso — Sistema de monitoreo de SLA</p></div></div>
-</div></header>
+<header class="header"><div class="header-inner"><div class="brand"><div class="brand-logo-wrap"><img src="logo.png" alt="RED" class="brand-logo"></div><div><p class="brand-name">Red Intelfon</p><p class="brand-subtitle">Observación de caso — Sistema de monitoreo de SLA</p></div></div></div></header>
 <main class="container">
 <div id="loading" class="card loading">Cargando información…</div>
 <div id="content" class="hidden">
-<section class="card">
-<h1 class="card-title"><span>Caso <span id="caseId"></span></span></h1>
-<p id="clientName" class="client-name"></p>
-<p id="processState" class="process-state"></p>
-</section>
-
-<section id="feedbackAgenteCard" class="card hidden">
-<h2 class="card-title"><span>Retroalimentación del responsable</span></h2>
-<div id="feedbackAgenteList" class="feedback-list"></div>
-</section>
-
-<section id="vistaLider" class="card hidden">
-<h2 class="card-title"><span>Observaciones anteriores</span></h2>
-<div id="obsList" class="feedback-list"></div>
-<form id="obsForm">
-<div class="form-group"><label class="label" for="correoAutor">Tu correo</label>
-<select id="correoAutor" class="select" required>
-<option value="" disabled selected>Selecciona tu correo</option>
-</select></div>
-<div class="form-group"><label class="label" for="observacion">Tu observación</label>
-<textarea id="observacion" class="textarea" maxlength="3000" placeholder="Escribe aquí tu observación sobre este caso. Se le avisará por correo al agente responsable." required></textarea></div>
-<button id="submitLider" class="submit-button" type="submit">Guardar y avisar al agente</button>
-<div id="messageLider" class="message" role="status"></div>
-</form>
-</section>
-
-<section id="vistaAgente" class="card hidden">
-<h2 class="card-title"><span>Observación recibida</span></h2>
-<div class="observation">
-<p class="observation-meta" id="agenteAutorRol"></p>
-<p class="observation-text" id="agenteObservacionTexto"></p>
-</div>
-<div id="respuestaYaEnviada" class="hidden" style="margin-top:14px;">
-<div class="feedback-reply">
-<p class="feedback-reply-meta">Tu respuesta</p>
-<p class="feedback-reply-text" id="respuestaTexto"></p>
-</div>
-</div>
-<form id="respuestaForm">
-<div class="form-group"><label class="label" for="respuesta">Tu respuesta</label>
-<textarea id="respuesta" class="textarea" maxlength="3000" placeholder="Escribe aquí tu respuesta a la observación." required></textarea></div>
-<button id="submitAgente" class="submit-button" type="submit">Enviar respuesta</button>
-<div id="messageAgente" class="message" role="status"></div>
-</form>
-</section>
-
+<section class="card"><h1 class="card-title">Caso <span id="caseId"></span></h1><p id="clientName" class="client-name"></p><p id="processState" class="process-state"></p></section>
+<section id="feedbackAgenteCard" class="card hidden"><h2 class="card-title">Retroalimentación del responsable</h2><div id="feedbackAgenteList" class="feedback-list"></div></section>
+<section id="vistaLider" class="card hidden"><h2 class="card-title">Observaciones anteriores</h2><div id="obsList" class="feedback-list"></div><form id="obsForm"><div class="form-group"><label class="label" for="correoAutor">Tu correo</label><select id="correoAutor" class="select" required><option value="" disabled selected>Selecciona tu correo</option></select></div><div class="form-group"><label class="label" for="observacion">Tu observación</label><textarea id="observacion" class="textarea" maxlength="3000" placeholder="Escribe aquí tu observación sobre este caso. Se le avisará por correo al agente responsable." required></textarea></div><button id="submitLider" class="submit-button" type="submit">Guardar y avisar al agente</button><div id="messageLider" class="message"></div></form></section>
+<section id="vistaAgente" class="card hidden"><h2 class="card-title">Observación recibida</h2><div class="observation"><p class="observation-meta" id="agenteAutorRol"></p><p class="observation-text" id="agenteObservacionTexto"></p></div><div id="respuestaYaEnviada" class="hidden" style="margin-top:14px"><div class="feedback-reply"><p class="feedback-reply-meta">Tu respuesta</p><p class="feedback-reply-text" id="respuestaTexto"></p></div></div><form id="respuestaForm"><div class="form-group"><label class="label" for="respuesta">Tu respuesta</label><textarea id="respuesta" class="textarea" maxlength="3000" placeholder="Escribe aquí tu respuesta a la observación." required></textarea></div><button id="submitAgente" class="submit-button" type="submit">Enviar respuesta</button><div id="messageAgente" class="message"></div></form></section>
 </div>
 </main>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const SUPABASE_URL = "https://erjmqjcjggxbktxcogkm.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJIUzI1NiIsInJlZiI6ImVyam1xamNqZ2d4Ymt0eGNvZ2ttIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY2Mzc1NjQsImV4cCI6MjEwMjIxMzU2NH0.2uEZMun4NvXzosNtDnf4UTPKdt3NGaQUtaFyfV-wojY";
-const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-const params = new URLSearchParams(window.location.search);
-const token = params.get("token");
-const loading = document.getElementById("loading");
-const content = document.getElementById("content");
-function formatDate(v){ if(!v) return ""; return new Intl.DateTimeFormat("es-GT",{dateStyle:"medium",timeStyle:"short"}).format(new Date(v)); }
-function showMessage(el,t,type){ el.textContent = t; el.className = "message " + type; }
-function clearMessage(el){ el.textContent = ""; el.className = "message"; }
-
-function renderCabecera(ctx){
-  document.getElementById("caseId").textContent = ctx.case_id || "—";
-  document.getElementById("clientName").textContent = (ctx.cliente_nombre || "Cliente no informado") + " · " + (ctx.pais || "—");
-  document.getElementById("processState").textContent = "Estado actual: " + (ctx.estado_actual || "—");
-}
-
-function renderRoles(roles){
-  const select = document.getElementById("correoAutor");
-  select.innerHTML = '<option value="" disabled selected>Selecciona tu correo</option>';
-  for(const r of (roles || [])){
-    if(!r.correo) continue;
-    const opt = document.createElement("option");
-    opt.value = r.correo;
-    opt.textContent = r.correo;
-    select.appendChild(opt);
-  }
-}
-
-function renderFeedbackAgente(items){
-  const card = document.getElementById("feedbackAgenteCard");
-  const list = document.getElementById("feedbackAgenteList");
-  list.innerHTML = "";
-  if(!items || !items.length){ card.classList.add("hidden"); return; }
-  card.classList.remove("hidden");
-  for(const it of items){
-    const item = document.createElement("article"); item.className = "feedback-agent-item";
-    const meta = document.createElement("p"); meta.className = "feedback-agent-meta";
-    const tipo = it.tipo_alerta === "etapa" && it.etapa ? " · Etapa: " + it.etapa : "";
-    meta.textContent = (it.autor_email || "Responsable") + " · " + formatDate(it.creado_en) + tipo;
-    const text = document.createElement("p"); text.className = "feedback-text"; text.textContent = it.comentario || "";
-    item.append(meta, text); list.appendChild(item);
-  }
-}
-
-function renderVistaLider(ctx){
-  document.getElementById("vistaLider").classList.remove("hidden");
-  renderFeedbackAgente(ctx.retroalimentaciones_agente || []);
-  renderRoles(ctx.roles);
-  const list = document.getElementById("obsList");
-  list.innerHTML = "";
-  const items = ctx.observaciones || [];
-  if(!items.length){ const empty = document.createElement("p"); empty.className = "empty"; empty.textContent = "Aún no hay observaciones para este caso."; list.appendChild(empty); }
-  for(const it of items){
-    const item = document.createElement("article"); item.className = "feedback-item";
-    const meta = document.createElement("p"); meta.className = "feedback-meta"; meta.textContent = (it.autor_correo || it.autor_rol) + " · " + formatDate(it.creado_en);
-    const text = document.createElement("p"); text.className = "feedback-text"; text.textContent = it.observacion;
-    item.append(meta, text);
-    if(it.respuesta_agente){
-      const reply = document.createElement("div"); reply.className = "feedback-reply";
-      const rmeta = document.createElement("p"); rmeta.className = "feedback-reply-meta"; rmeta.textContent = "Respuesta del agente · " + formatDate(it.respuesta_en);
-      const rtext = document.createElement("p"); rtext.className = "feedback-reply-text"; rtext.textContent = it.respuesta_agente;
-      reply.append(rmeta, rtext); item.appendChild(reply);
-    }
-    list.appendChild(item);
-  }
-}
-
-function renderVistaAgente(ctx){
-  document.getElementById("feedbackAgenteCard").classList.add("hidden");
-  document.getElementById("vistaAgente").classList.remove("hidden");
-  document.getElementById("agenteAutorRol").textContent = "Observación de: " + (ctx.autor_correo || ctx.autor_rol || "—");
-  document.getElementById("agenteObservacionTexto").textContent = ctx.observacion || "";
-  if(ctx.respuesta_agente){
-    document.getElementById("respuestaYaEnviada").classList.remove("hidden");
-    document.getElementById("respuestaTexto").textContent = ctx.respuesta_agente;
-    document.getElementById("respuestaForm").classList.add("hidden");
-  }
-}
-
-async function loadContext(){
-  if(!token){ loading.textContent = "El enlace no contiene un token válido."; return; }
-  const { data, error } = await supabaseClient.rpc("obtener_contexto_observacion", { p_token: token });
-  if(error){ console.error(error); loading.textContent = "No fue posible abrir este enlace."; return; }
-  if(!data || data.error){ loading.textContent = (data && data.error) || "El enlace no existe o ya no está disponible."; return; }
-  renderCabecera(data);
-  if(data.vista === "lider"){ renderVistaLider(data); } else { renderVistaAgente(data); }
-  loading.classList.add("hidden");
-  content.classList.remove("hidden");
-}
-
-const obsForm = document.getElementById("obsForm");
-obsForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const msg = document.getElementById("messageLider"); clearMessage(msg);
-  const correoAutor = document.getElementById("correoAutor").value;
-  const observacion = document.getElementById("observacion").value.trim();
-  if(!correoAutor){ showMessage(msg, "Selecciona tu correo de la lista.", "error"); return; }
-  if(observacion.length < 3){ showMessage(msg, "Escribe una observación de al menos 3 caracteres.", "error"); return; }
-  const btn = document.getElementById("submitLider"); btn.disabled = true; btn.textContent = "Guardando…";
-  try {
-    const { data, error } = await supabaseClient.rpc("guardar_observacion_lider", { p_token: token, p_autor_correo: correoAutor, p_observacion: observacion });
-    if(error) throw error;
-    if(!data || !data.ok) throw new Error((data && data.error) || "No se pudo guardar.");
-    document.getElementById("observacion").value = "";
-    showMessage(msg, "Observación guardada. Se le avisó al agente por correo.", "success");
-    await loadContext();
-  } catch(err){
-    console.error(err);
-    showMessage(msg, (err && err.message) || "No fue posible guardar la observación.", "error");
-  } finally {
-    btn.disabled = false; btn.textContent = "Guardar y avisar al agente";
-  }
-});
-
-const respuestaForm = document.getElementById("respuestaForm");
-respuestaForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const msg = document.getElementById("messageAgente"); clearMessage(msg);
-  const respuesta = document.getElementById("respuesta").value.trim();
-  if(respuesta.length < 3){ showMessage(msg, "Escribe una respuesta de al menos 3 caracteres.", "error"); return; }
-  const btn = document.getElementById("submitAgente"); btn.disabled = true; btn.textContent = "Enviando…";
-  try {
-    const { data, error } = await supabaseClient.rpc("guardar_respuesta_agente", { p_token_respuesta: token, p_respuesta: respuesta });
-    if(error) throw error;
-    if(!data || !data.ok) throw new Error((data && data.error) || "No se pudo guardar.");
-    showMessage(msg, "Respuesta enviada correctamente.", "success");
-    await loadContext();
-  } catch(err){
-    console.error(err);
-    showMessage(msg, (err && err.message) || "No fue posible enviar la respuesta.", "error");
-  } finally {
-    btn.disabled = false; btn.textContent = "Enviar respuesta";
-  }
-});
-
+const API='https://erjmqjcjggxbktxcogkm.supabase.co/functions/v1/observacion-lider-api';
+const params=new URLSearchParams(location.search);const token=params.get('token');const loading=document.getElementById('loading');const content=document.getElementById('content');
+function formatDate(v){if(!v)return'';return new Intl.DateTimeFormat('es-GT',{dateStyle:'medium',timeStyle:'short'}).format(new Date(v))}
+function showMessage(el,t,type){el.textContent=t;el.className='message '+type}function clearMessage(el){el.textContent='';el.className='message'}
+function renderCabecera(ctx){document.getElementById('caseId').textContent=ctx.case_id||'—';document.getElementById('clientName').textContent=(ctx.cliente_nombre||'Cliente no informado')+' · '+(ctx.pais||'—');document.getElementById('processState').textContent='Estado actual: '+(ctx.estado_actual||'—')}
+function renderRoles(roles){const s=document.getElementById('correoAutor');s.innerHTML='<option value="" disabled selected>Selecciona tu correo</option>';for(const r of(roles||[])){if(!r.correo)continue;const o=document.createElement('option');o.value=r.correo;o.textContent=r.correo;s.appendChild(o)}}
+function renderFeedbackAgente(items){const card=document.getElementById('feedbackAgenteCard'),list=document.getElementById('feedbackAgenteList');list.innerHTML='';if(!items||!items.length){card.classList.add('hidden');return}card.classList.remove('hidden');for(const it of items){const a=document.createElement('article');a.className='feedback-agent-item';const m=document.createElement('p');m.className='feedback-agent-meta';const etapa=it.tipo_alerta==='etapa'&&it.etapa?' · Etapa: '+it.etapa:'';m.textContent=(it.autor_email||'Responsable')+' · '+formatDate(it.creado_en)+etapa;const t=document.createElement('p');t.className='feedback-text';t.textContent=it.comentario||'';a.append(m,t);list.appendChild(a)}}
+function renderVistaLider(ctx){document.getElementById('vistaLider').classList.remove('hidden');renderFeedbackAgente(ctx.retroalimentaciones_agente||[]);renderRoles(ctx.roles);const list=document.getElementById('obsList');list.innerHTML='';const items=ctx.observaciones||[];if(!items.length){const e=document.createElement('p');e.className='empty';e.textContent='Aún no hay observaciones para este caso.';list.appendChild(e)}for(const it of items){const a=document.createElement('article');a.className='feedback-item';const m=document.createElement('p');m.className='feedback-meta';m.textContent=(it.autor_correo||it.autor_rol)+' · '+formatDate(it.creado_en);const t=document.createElement('p');t.className='feedback-text';t.textContent=it.observacion;a.append(m,t);if(it.respuesta_agente){const r=document.createElement('div');r.className='feedback-reply';const rm=document.createElement('p');rm.className='feedback-reply-meta';rm.textContent='Respuesta del agente · '+formatDate(it.respuesta_en);const rt=document.createElement('p');rt.className='feedback-reply-text';rt.textContent=it.respuesta_agente;r.append(rm,rt);a.appendChild(r)}list.appendChild(a)}}
+function renderVistaAgente(ctx){document.getElementById('vistaAgente').classList.remove('hidden');document.getElementById('agenteAutorRol').textContent='Observación de: '+(ctx.autor_correo||ctx.autor_rol||'—');document.getElementById('agenteObservacionTexto').textContent=ctx.observacion||'';if(ctx.respuesta_agente){document.getElementById('respuestaYaEnviada').classList.remove('hidden');document.getElementById('respuestaTexto').textContent=ctx.respuesta_agente;document.getElementById('respuestaForm').classList.add('hidden')}}
+async function apiGet(){const r=await fetch(API+'?token='+encodeURIComponent(token),{cache:'no-store'});const j=await r.json().catch(()=>null);if(!r.ok||!j?.ok)throw new Error(j?.error||'No fue posible abrir este enlace.');return j.data}
+async function apiPost(body){const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const j=await r.json().catch(()=>null);if(!r.ok||!j?.ok)throw new Error(j?.error||'No fue posible completar la acción.');return j}
+async function loadContext(){if(!token){loading.textContent='El enlace no contiene un token válido.';return}try{const data=await apiGet();if(!data||data.error)throw new Error(data?.error||'El enlace no existe o ya no está disponible.');renderCabecera(data);if(data.vista==='lider')renderVistaLider(data);else renderVistaAgente(data);loading.classList.add('hidden');content.classList.remove('hidden')}catch(e){console.error(e);loading.textContent=e.message||'No fue posible abrir este enlace.'}}
+document.getElementById('obsForm').addEventListener('submit',async e=>{e.preventDefault();const msg=document.getElementById('messageLider');clearMessage(msg);const correo=document.getElementById('correoAutor').value,obs=document.getElementById('observacion').value.trim();if(!correo){showMessage(msg,'Selecciona tu correo de la lista.','error');return}if(obs.length<3){showMessage(msg,'Escribe una observación de al menos 3 caracteres.','error');return}const b=document.getElementById('submitLider');b.disabled=true;b.textContent='Guardando…';try{await apiPost({action:'guardar_observacion',token,correo,observacion:obs});document.getElementById('observacion').value='';showMessage(msg,'Observación guardada. Se le avisó al agente por correo.','success');await loadContext()}catch(err){showMessage(msg,err.message||'No fue posible guardar la observación.','error')}finally{b.disabled=false;b.textContent='Guardar y avisar al agente'}})
+document.getElementById('respuestaForm').addEventListener('submit',async e=>{e.preventDefault();const msg=document.getElementById('messageAgente');clearMessage(msg);const respuesta=document.getElementById('respuesta').value.trim();if(respuesta.length<3){showMessage(msg,'Escribe una respuesta de al menos 3 caracteres.','error');return}const b=document.getElementById('submitAgente');b.disabled=true;b.textContent='Enviando…';try{await apiPost({action:'guardar_respuesta',token,respuesta});showMessage(msg,'Respuesta enviada correctamente.','success');await loadContext()}catch(err){showMessage(msg,err.message||'No fue posible enviar la respuesta.','error')}finally{b.disabled=false;b.textContent='Enviar respuesta'}})
 loadContext();
 </script>
-</body>
-</html>
+</body></html>
