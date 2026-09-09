@@ -27,7 +27,9 @@ button,input,textarea,select{font:inherit}
 .observation-text{margin:0;color:var(--text);font-size:14px;font-weight:700;line-height:1.55;white-space:pre-wrap}
 .feedback-list{display:grid;gap:12px;margin-bottom:6px}
 .feedback-item{padding:13px 15px;border-left:4px solid #2dd4bf;border-radius:0 7px 7px 0;background:var(--soft-bg)}
+.feedback-agent-item{padding:13px 15px;border-left:4px solid #2563eb;border-radius:0 7px 7px 0;background:#eff6ff}
 .feedback-meta{margin:0 0 7px;color:#0d9488;font-size:12px;font-weight:800}
+.feedback-agent-meta{margin:0 0 7px;color:#1d4ed8;font-size:12px;font-weight:800}
 .feedback-text{margin:0;color:var(--text);font-size:14px;font-weight:700;line-height:1.55;white-space:pre-wrap}
 .feedback-reply{margin-top:9px;padding:10px 12px;border-left:3px solid #94a3b8;border-radius:0 6px 6px 0;background:var(--card-bg)}
 .feedback-reply-meta{margin:0 0 5px;color:#64748b;font-size:11px;font-weight:800;text-transform:uppercase}
@@ -61,6 +63,11 @@ button,input,textarea,select{font:inherit}
 <h1 class="card-title"><span>Caso <span id="caseId"></span></span></h1>
 <p id="clientName" class="client-name"></p>
 <p id="processState" class="process-state"></p>
+</section>
+
+<section id="feedbackAgenteCard" class="card hidden">
+<h2 class="card-title"><span>Retroalimentación del responsable</span></h2>
+<div id="feedbackAgenteList" class="feedback-list"></div>
 </section>
 
 <section id="vistaLider" class="card hidden">
@@ -103,7 +110,7 @@ button,input,textarea,select{font:inherit}
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const SUPABASE_URL = "https://erjmqjcjggxbktxcogkm.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVyam1xamNqZ2d4Ymt0eGNvZ2ttIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY2Mzc1NjQsImV4cCI6MjEwMjIxMzU2NH0.2uEZMun4NvXzosNtDnf4UTPKdt3NGaQUtaFyfV-wojY";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJIUzI1NiIsInJlZiI6ImVyam1xamNqZ2d4Ymt0eGNvZ2ttIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY2Mzc1NjQsImV4cCI6MjEwMjIxMzU2NH0.2uEZMun4NvXzosNtDnf4UTPKdt3NGaQUtaFyfV-wojY";
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 const params = new URLSearchParams(window.location.search);
 const token = params.get("token");
@@ -121,6 +128,7 @@ function renderCabecera(ctx){
 
 function renderRoles(roles){
   const select = document.getElementById("correoAutor");
+  select.innerHTML = '<option value="" disabled selected>Selecciona tu correo</option>';
   for(const r of (roles || [])){
     if(!r.correo) continue;
     const opt = document.createElement("option");
@@ -130,8 +138,25 @@ function renderRoles(roles){
   }
 }
 
+function renderFeedbackAgente(items){
+  const card = document.getElementById("feedbackAgenteCard");
+  const list = document.getElementById("feedbackAgenteList");
+  list.innerHTML = "";
+  if(!items || !items.length){ card.classList.add("hidden"); return; }
+  card.classList.remove("hidden");
+  for(const it of items){
+    const item = document.createElement("article"); item.className = "feedback-agent-item";
+    const meta = document.createElement("p"); meta.className = "feedback-agent-meta";
+    const tipo = it.tipo_alerta === "etapa" && it.etapa ? " · Etapa: " + it.etapa : "";
+    meta.textContent = (it.autor_email || "Responsable") + " · " + formatDate(it.creado_en) + tipo;
+    const text = document.createElement("p"); text.className = "feedback-text"; text.textContent = it.comentario || "";
+    item.append(meta, text); list.appendChild(item);
+  }
+}
+
 function renderVistaLider(ctx){
   document.getElementById("vistaLider").classList.remove("hidden");
+  renderFeedbackAgente(ctx.retroalimentaciones_agente || []);
   renderRoles(ctx.roles);
   const list = document.getElementById("obsList");
   list.innerHTML = "";
@@ -153,6 +178,7 @@ function renderVistaLider(ctx){
 }
 
 function renderVistaAgente(ctx){
+  document.getElementById("feedbackAgenteCard").classList.add("hidden");
   document.getElementById("vistaAgente").classList.remove("hidden");
   document.getElementById("agenteAutorRol").textContent = "Observación de: " + (ctx.autor_correo || ctx.autor_rol || "—");
   document.getElementById("agenteObservacionTexto").textContent = ctx.observacion || "";
