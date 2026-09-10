@@ -9,162 +9,21 @@
 html[data-theme="dark"]{color-scheme:dark;--body-bg:linear-gradient(180deg,#1f1417 0%,#0f172a 55%,#0b1830 100%);--card-bg:#172033;--soft-bg:#1e293b;--border:#334155;--text:#f8fafc;--muted:#94a3b8;--primary:#ef4444;--primary-hover:#f87171;--accent:#60a5fa;--accent-soft:#1e293b;--observation:#f87171;--observation-soft:#3a1a1c;--observation-text:#fca5a5;--etapa-soft:#1e293b;--etapa-text:#93c5fd;--shadow:0 10px 30px rgba(0,0,0,.35);}
 *{box-sizing:border-box}
 body{margin:0;min-height:100vh;background:var(--body-bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;}
-button,input,textarea{font:inherit}
-.header{background:var(--primary);border-bottom:1px solid rgba(0,0,0,.06)}
-.header-inner{width:min(100% - 32px,720px);min-height:78px;margin:auto;display:flex;align-items:center;justify-content:space-between}
-.brand{display:flex;align-items:center;gap:12px}
-.brand-logo-wrap{width:44px;height:44px;border-radius:50%;background:#ffffff;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.15)}
-.brand-logo{width:36px;height:36px;border-radius:50%;object-fit:cover;display:block}
-.brand-name{margin:0;font-size:15px;font-weight:800;color:#ffffff}
-.brand-subtitle{margin:2px 0 0;color:rgba(255,255,255,.85);font-size:11px}
-.container{width:min(100% - 32px,720px);margin:24px auto 50px}
-.card{margin-bottom:16px;padding:20px;border:1px solid var(--border);border-radius:14px;background:var(--card-bg);box-shadow:var(--shadow)}
-.card-title{margin:0 0 13px;display:flex;align-items:center;gap:8px;font-size:16px;font-weight:800}
-.client-name{margin:0 0 5px;font-size:15px;font-weight:800;line-height:1.4}
-.process-state{margin:0;color:var(--muted);font-size:13px}
-.chip{display:inline-block;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.3px;margin-bottom:10px}
-.chip.global{background:var(--observation-soft);color:var(--observation-text)}
-.chip.etapa{background:var(--etapa-soft);color:var(--etapa-text)}
-.observation{padding:13px 15px;border-radius:10px;background:var(--soft-bg)}
-.observation-text{margin:0;color:var(--text);font-size:14px;font-weight:700;line-height:1.55;white-space:pre-wrap}
-.feedback-list{display:grid;gap:12px;margin-bottom:6px}
-.feedback-item{display:flex;gap:11px;padding:13px 15px;border-radius:10px;background:var(--accent-soft)}
-.feedback-avatar{width:32px;height:32px;flex-shrink:0;border-radius:50%;background:var(--accent);color:#ffffff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800}
-.feedback-body{min-width:0}
-.feedback-meta{margin:0 0 6px;color:var(--accent);font-size:12px;font-weight:800}
-.feedback-text{margin:0;color:var(--text);font-size:14px;font-weight:700;line-height:1.55;white-space:pre-wrap}
-.empty{color:var(--muted);font-size:13px}
-.form-group{margin-top:17px}
-.label{display:block;margin-bottom:7px;color:var(--muted);font-size:13px;font-weight:700}
-.input,.textarea{width:100%;border:1px solid var(--border);border-radius:8px;background:var(--soft-bg);color:var(--text);outline:none;transition:border-color 150ms ease,box-shadow 150ms ease}
-.input{height:46px;padding:0 13px}
-.textarea{min-height:120px;padding:13px;resize:vertical;line-height:1.55}
-.input:focus,.textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(220,38,38,.14)}
-.input[readonly]{cursor:not-allowed;opacity:.82}
-.submit-button{min-height:46px;margin-top:16px;padding:0 20px;border:0;border-radius:8px;background:var(--primary);color:#fff;font-weight:800;cursor:pointer}
-.submit-button:hover{background:var(--primary-hover)}
-.submit-button:disabled{opacity:.65;cursor:wait}
-.message{display:none;margin-top:14px;padding:11px 13px;border-radius:8px;font-size:13px;font-weight:700}
-.message.success{display:block;border:1px solid #86efac;background:#f0fdf4;color:#166534}
-.message.error{display:block;border:1px solid #fecaca;background:#fef2f2;color:#b91c1c}
-.loading{padding:30px;text-align:center;color:var(--muted)}
-.hidden{display:none!important}
-@media(max-width:600px){.container{width:min(100% - 22px,720px);margin-top:14px}.header-inner{width:min(100% - 22px,720px)}.card{padding:17px}.submit-button{width:100%}}
+button,input,textarea{font:inherit}.header{background:var(--primary);border-bottom:1px solid rgba(0,0,0,.06)}.header-inner{width:min(100% - 32px,720px);min-height:78px;margin:auto;display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:12px}.brand-logo-wrap{width:44px;height:44px;border-radius:50%;background:#ffffff;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.15)}.brand-logo{width:36px;height:36px;border-radius:50%;object-fit:cover;display:block}.brand-name{margin:0;font-size:15px;font-weight:800;color:#ffffff}.brand-subtitle{margin:2px 0 0;color:rgba(255,255,255,.85);font-size:11px}.container{width:min(100% - 32px,720px);margin:24px auto 50px}.card{margin-bottom:16px;padding:20px;border:1px solid var(--border);border-radius:14px;background:var(--card-bg);box-shadow:var(--shadow)}.card-title{margin:0 0 13px;display:flex;align-items:center;gap:8px;font-size:16px;font-weight:800}.client-name{margin:0 0 5px;font-size:15px;font-weight:800;line-height:1.4}.process-state{margin:0;color:var(--muted);font-size:13px}.chip{display:inline-block;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.3px;margin-bottom:10px}.chip.global{background:var(--observation-soft);color:var(--observation-text)}.chip.etapa{background:var(--etapa-soft);color:var(--etapa-text)}.observation{padding:13px 15px;border-radius:10px;background:var(--soft-bg)}.observation-text{margin:0;color:var(--text);font-size:14px;font-weight:700;line-height:1.55;white-space:pre-wrap}.feedback-list{display:grid;gap:12px;margin-bottom:6px}.feedback-item{display:flex;gap:11px;padding:13px 15px;border-radius:10px;background:var(--accent-soft)}.feedback-avatar{width:32px;height:32px;flex-shrink:0;border-radius:50%;background:var(--accent);color:#ffffff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800}.feedback-body{min-width:0}.feedback-meta{margin:0 0 6px;color:var(--accent);font-size:12px;font-weight:800}.feedback-text{margin:0;color:var(--text);font-size:14px;font-weight:700;line-height:1.55;white-space:pre-wrap}.empty{color:var(--muted);font-size:13px}.form-group{margin-top:17px}.label{display:block;margin-bottom:7px;color:var(--muted);font-size:13px;font-weight:700}.input,.textarea{width:100%;border:1px solid var(--border);border-radius:8px;background:var(--soft-bg);color:var(--text);outline:none;transition:border-color 150ms ease,box-shadow 150ms ease}.input{height:46px;padding:0 13px}.textarea{min-height:120px;padding:13px;resize:vertical;line-height:1.55}.input:focus,.textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(220,38,38,.14)}.input[readonly]{cursor:not-allowed;opacity:.82}.submit-button{min-height:46px;margin-top:16px;padding:0 20px;border:0;border-radius:8px;background:var(--primary);color:#fff;font-weight:800;cursor:pointer}.submit-button:hover{background:var(--primary-hover)}.submit-button:disabled{opacity:.65;cursor:wait}.message{display:none;margin-top:14px;padding:11px 13px;border-radius:8px;font-size:13px;font-weight:700}.message.success{display:block;border:1px solid #86efac;background:#f0fdf4;color:#166534}.message.error{display:block;border:1px solid #fecaca;background:#fef2f2;color:#b91c1c}.loading{padding:30px;text-align:center;color:var(--muted)}.hidden{display:none!important}@media(max-width:600px){.container{width:min(100% - 22px,720px);margin-top:14px}.header-inner{width:min(100% - 22px,720px)}.card{padding:17px}.submit-button{width:100%}}
 </style>
 </head>
 <body>
-<header class="header"><div class="header-inner">
-<div class="brand"><div class="brand-logo-wrap"><img src="logo.png" alt="RED" class="brand-logo"></div><div><p class="brand-name">Red Intelfon</p><p class="brand-subtitle">Retroalimentación — Sistema de monitoreo de SLA</p></div></div>
-</div></header>
-<main class="container">
-<div id="loading" class="card loading">Cargando información…</div>
-<div id="content" class="hidden">
-<section class="card">
-<h1 class="card-title"><span>Caso <span id="caseId"></span></span></h1>
-<p id="clientName" class="client-name"></p>
-<p id="processState" class="process-state"></p>
-</section>
-<section class="card">
-<h2 class="card-title"><span>Detalle del caso</span></h2>
-<span class="chip" id="detalleTipo"></span>
-<div class="observation">
-<p class="observation-text" id="detalleTexto"></p>
-</div>
-</section>
-<section class="card">
-<h2 class="card-title"><span>Retroalimentación</span></h2>
-<div id="feedbackList" class="feedback-list"></div>
-<form id="feedbackForm">
-<div class="form-group"><label class="label" for="email">Correo que quedará registrado</label>
-<input id="email" class="input" type="email" autocomplete="email" placeholder="Tu correo" readonly required></div>
-<div class="form-group"><label class="label" for="comment">Escribí tu retroalimentación</label>
-<textarea id="comment" class="textarea" maxlength="3000" placeholder="Explica aquí por qué se venció este caso o cuál es el seguimiento." required></textarea></div>
-<button id="submitButton" class="submit-button" type="submit">Guardar retroalimentación</button>
-<div id="message" class="message" role="status"></div>
-</form>
-</section>
-</div>
-</main>
+<header class="header"><div class="header-inner"><div class="brand"><div class="brand-logo-wrap"><img src="logo.png" alt="RED" class="brand-logo"></div><div><p class="brand-name">Red Intelfon</p><p class="brand-subtitle">Retroalimentación — Sistema de monitoreo de SLA</p></div></div></div></header>
+<main class="container"><div id="loading" class="card loading">Cargando información…</div><div id="content" class="hidden"><section class="card"><h1 class="card-title"><span>Caso <span id="caseId"></span></span></h1><p id="clientName" class="client-name"></p><p id="processState" class="process-state"></p></section><section class="card"><h2 class="card-title"><span>Detalle del caso</span></h2><span class="chip" id="detalleTipo"></span><div class="observation"><p class="observation-text" id="detalleTexto"></p></div></section><section class="card"><h2 class="card-title"><span>Retroalimentación</span></h2><div id="feedbackList" class="feedback-list"></div><form id="feedbackForm"><div class="form-group"><label class="label" for="email">Correo que quedará registrado</label><input id="email" class="input" type="email" autocomplete="email" placeholder="Tu correo" readonly required></div><div class="form-group"><label class="label" for="comment">Escribí tu retroalimentación</label><textarea id="comment" class="textarea" maxlength="3000" placeholder="Explica aquí por qué se venció este caso o cuál es el seguimiento." required></textarea></div><button id="submitButton" class="submit-button" type="submit">Guardar retroalimentación</button><div id="message" class="message" role="status"></div></form></section></div></main>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const SUPABASE_URL = "https://erjmqjcjggxbktxcogkm.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVyam1xamNqZ2d4Ymt0eGNvZ2ttIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY2Mzc1NjQsImV4cCI6MjEwMjIxMzU2NH0.2uEZMun4NvXzosNtDnf4UTPKdt3NGaQUtaFyfV-wojY";
-const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-const params = new URLSearchParams(window.location.search);
-const token = params.get("token");
-const emailFromUrl = (params.get("correo") || "").trim().toLowerCase();
-const loading = document.getElementById("loading");
-const content = document.getElementById("content");
-const form = document.getElementById("feedbackForm");
-const emailInput = document.getElementById("email");
-const commentInput = document.getElementById("comment");
-const submitButton = document.getElementById("submitButton");
-const message = document.getElementById("message");
-function formatDate(v){ if(!v) return ""; return new Intl.DateTimeFormat("es-GT",{dateStyle:"medium",timeStyle:"short"}).format(new Date(v)); }
-function showMessage(t,type){ message.textContent = t; message.className = "message " + type; }
-function clearMessage(){ message.textContent = ""; message.className = "message"; }
-function initialsFromEmail(email){
-  const local = (email || "").split("@")[0] || "";
-  const parts = local.split(/[._-]+/).filter(Boolean);
-  if(parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
-  return local.slice(0,2).toUpperCase() || "??";
-}
-function renderContext(ctx){
-  document.getElementById("caseId").textContent = ctx.case_id || "—";
-  document.getElementById("clientName").textContent = (ctx.cliente_nombre || "Cliente no informado") + " · " + (ctx.pais || "—");
-  document.getElementById("processState").textContent = "Estado actual: " + (ctx.estado_actual || "—");
-  const chip = document.getElementById("detalleTipo");
-  const esGlobal = ctx.tipo_alerta === "global";
-  chip.textContent = esGlobal ? "SLA global vencido" : ("SLA por etapa: " + (ctx.etapa || "").toUpperCase());
-  chip.className = "chip " + (esGlobal ? "global" : "etapa");
-  document.getElementById("detalleTexto").textContent = "Categoría: " + (ctx.categoria_nombre || "No informada");
-  renderFeedback(ctx.retroalimentaciones || []);
-  emailInput.value = emailFromUrl || ctx.correo_destinatario || "";
-  loading.classList.add("hidden");
-  content.classList.remove("hidden");
-}
-function renderFeedback(items){
-  const list = document.getElementById("feedbackList");
-  list.innerHTML = "";
-  if(!items.length){ const empty = document.createElement("p"); empty.className = "empty"; empty.textContent = "Aún no hay comentarios."; list.appendChild(empty); return; }
-  for(const fb of items){
-    const item = document.createElement("article"); item.className = "feedback-item";
-    const avatar = document.createElement("div"); avatar.className = "feedback-avatar"; avatar.textContent = initialsFromEmail(fb.autor_email);
-    const body = document.createElement("div"); body.className = "feedback-body";
-    const meta = document.createElement("p"); meta.className = "feedback-meta"; meta.textContent = fb.autor_email + " · " + formatDate(fb.creado_en);
-    const text = document.createElement("p"); text.className = "feedback-text"; text.textContent = fb.comentario;
-    body.append(meta, text); item.append(avatar, body); list.appendChild(item);
-  }
-}
-async function loadContext(){
-  if(!token){ loading.textContent = "El enlace no contiene un token de retroalimentación."; return; }
-  const { data, error } = await supabaseClient.rpc("obtener_contexto_retroalimentacion", { p_token: token });
-  if(error){ console.error(error); loading.textContent = "No fue posible abrir este enlace."; return; }
-  if(!data || data.error){ loading.textContent = (data && data.error) || "El enlace no existe o ya no está disponible."; return; }
-  renderContext(data);
-}
-form.addEventListener("submit", async (e) => {
-  e.preventDefault(); clearMessage();
-  const email = emailInput.value.trim().toLowerCase();
-  const comment = commentInput.value.trim();
-  if(!email){ showMessage("No encontramos el correo del destinatario.", "error"); return; }
-  if(comment.length < 3){ showMessage("Escribí una retroalimentación de al menos 3 caracteres.", "error"); return; }
-  submitButton.disabled = true; submitButton.textContent = "Guardando…";
-  try {
-    const { data, error } = await supabaseClient.rpc("guardar_retroalimentacion", { p_token: token, p_correo: email, p_comentario: comment });
-    if(error) throw error;
-    if(!data || !data.ok) throw new Error((data && data.error) || "No se pudo guardar.");
-    commentInput.value = "";
-    showMessage("Retroalimentación guardada correctamente.", "success");
-    await loadContext();
-  } catch(err){
-    console.error(err);
-    showMessage((err && err.message) || "No fue posible guardar la retroalimentación.", "error");
-  } finally {
-    submitButton.disabled = false; submitButton.textContent = "Guardar retroalimentación";
-  }
-});
-loadContext();
+const SUPABASE_URL="https://erjmqjcjggxbktxcogkm.supabase.co";
+const SUPABASE_ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVyam1xamNqZ2d4Ymt0eGNvZ2ttIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY2Mzc1NjQsImV4cCI6MjEwMjIxMzU2NH0.2uEZMun4NvXzosNtDnf4UTPKdt3NGaQUtaFyfV-wojY";
+const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);const params=new URLSearchParams(window.location.search);const token=params.get("token");const emailFromUrl=(params.get("correo")||"").trim().toLowerCase();const loading=document.getElementById("loading"),content=document.getElementById("content"),form=document.getElementById("feedbackForm"),emailInput=document.getElementById("email"),commentInput=document.getElementById("comment"),submitButton=document.getElementById("submitButton"),message=document.getElementById("message");
+function formatDate(v){if(!v)return"";return new Intl.DateTimeFormat("es-GT",{dateStyle:"medium",timeStyle:"short"}).format(new Date(v))}function showMessage(t,type){message.textContent=t;message.className="message "+type}function clearMessage(){message.textContent="";message.className="message"}function initialsFromEmail(email){const local=(email||"").split("@")[0]||"";const parts=local.split(/[._-]+/).filter(Boolean);if(parts.length>=2)return(parts[0][0]+parts[1][0]).toUpperCase();return local.slice(0,2).toUpperCase()||"??"}
+function renderFeedback(items){const list=document.getElementById("feedbackList");list.innerHTML="";if(!items.length){const empty=document.createElement("p");empty.className="empty";empty.textContent="Aún no hay comentarios.";list.appendChild(empty);return}for(const fb of items){const item=document.createElement("article");item.className="feedback-item";const avatar=document.createElement("div");avatar.className="feedback-avatar";avatar.textContent=initialsFromEmail(fb.autor_email);const body=document.createElement("div");body.className="feedback-body";const meta=document.createElement("p");meta.className="feedback-meta";meta.textContent=fb.autor_email+" · "+formatDate(fb.creado_en);const text=document.createElement("p");text.className="feedback-text";text.textContent=fb.comentario;body.append(meta,text);item.append(avatar,body);list.appendChild(item)}}
+function renderContext(ctx){document.getElementById("caseId").textContent=ctx.case_id||"—";document.getElementById("clientName").textContent=(ctx.cliente_nombre||"Cliente no informado")+" · "+(ctx.pais||"—");document.getElementById("processState").textContent="Estado actual: "+(ctx.estado_actual||"—");const chip=document.getElementById("detalleTipo");const esGlobal=ctx.tipo_alerta==="global";chip.textContent=esGlobal?"SLA global vencido":("SLA por etapa: "+(ctx.etapa||"").toUpperCase());chip.className="chip "+(esGlobal?"global":"etapa");document.getElementById("detalleTexto").textContent="Categoría: "+(ctx.categoria_nombre||"No informada");renderFeedback(ctx.retroalimentaciones||[]);emailInput.value=(ctx.correo_destinatario||emailFromUrl||"").trim().toLowerCase();loading.classList.add("hidden");content.classList.remove("hidden")}
+async function loadContext(){if(!token){loading.textContent="El enlace no contiene un token de retroalimentación.";return}const{data,error}=await supabaseClient.rpc("obtener_contexto_retroalimentacion",{p_token:token});if(error){console.error(error);loading.textContent="No fue posible abrir este enlace.";return}if(!data||data.error){loading.textContent=(data&&data.error)||"El enlace no existe o ya no está disponible.";return}renderContext(data)}
+form.addEventListener("submit",async e=>{e.preventDefault();clearMessage();const email=emailInput.value.trim().toLowerCase(),comment=commentInput.value.trim();if(!email){showMessage("No encontramos el correo del destinatario.","error");return}if(comment.length<3){showMessage("Escribí una retroalimentación de al menos 3 caracteres.","error");return}submitButton.disabled=true;submitButton.textContent="Guardando…";try{const{data,error}=await supabaseClient.rpc("guardar_retroalimentacion",{p_token:token,p_correo:email,p_comentario:comment});if(error)throw error;if(!data||!data.ok)throw new Error((data&&data.error)||"No se pudo guardar.");commentInput.value="";showMessage("Retroalimentación guardada correctamente.","success");await loadContext()}catch(err){console.error(err);showMessage((err&&err.message)||"No fue posible guardar la retroalimentación.","error")}finally{submitButton.disabled=false;submitButton.textContent="Guardar retroalimentación"}});loadContext();
 </script>
-</body>
-</html>
+</body></html>
