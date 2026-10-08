@@ -1,17 +1,112 @@
-<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Feedback SLA</title>
-<style>body{margin:0;background:#e6fffb;font-family:Segoe UI,Arial;color:#172033}.w{max-width:720px;margin:24px auto;padding:0 16px}.c{background:#fff;border:1px solid #dbe5ea;border-radius:14px;padding:20px;margin-bottom:16px}.id{padding:12px;border:1px solid #99f6e4;background:#f0fdfa;border-radius:8px;font-weight:800}textarea,input{width:100%;box-sizing:border-box;padding:12px;border:1px solid #cbd5e1;border-radius:8px;font:inherit}textarea{min-height:120px}button{margin-top:12px;padding:11px 16px;border:0;border-radius:8px;background:#0d9488;color:white;font-weight:800}.link{background:none;color:#0f766e;text-decoration:underline;padding:0}.hide{display:none}.muted{color:#64748b}.msg{font-weight:700}</style>
-<body><main class="w"><div id="load" class="c">Cargando…</div><div id="app" class="hide">
-<section class="c"><h2>Caso <span id="case"></span></h2><p id="client"></p><p id="state" class="muted"></p></section>
-<section class="c"><h3>Observaciones anteriores</h3><div id="hist"></div>
-<div id="owner"><p class="muted"><b>Identificado automáticamente como</b></p><div id="who" class="id"></div><button id="other" class="link" type="button">No soy esta persona / Dar feedback como otra persona</button></div>
-<div id="alt" class="hide"><p><b>Verifica tu correo corporativo</b></p><p class="muted">Solo @red.com.gt o @red.com.sv</p><input id="email" type="email" placeholder="usuario@red.com.gt"><button id="send" type="button">Enviar enlace de verificación</button><p id="verify" class="msg"></p><div id="verified" class="hide"><div id="verifiedWho" class="id"></div><button id="back" class="link" type="button">Volver a la identidad original</button></div></div>
-<p><b>Tu observación</b></p><textarea id="obs"></textarea><button id="save">Guardar y avisar al agente</button><p id="msg" class="msg"></p></section></div></main>
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Observación del líder — SLA</title>
+<style>
+:root{color-scheme:light;--body-bg:linear-gradient(180deg,#ccfbf1 0%,#f0fdfa 55%,#cffafe 100%);--card-bg:#fff;--soft-bg:#f0fdfa;--border:#e2e8f0;--text:#172033;--muted:#64748b;--primary:#0d9488;--primary-hover:#0f766e;--shadow:0 10px 28px rgba(15,23,42,.09)}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:var(--body-bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input,textarea,select{font:inherit}.header{background:var(--primary)}.header-inner{width:min(100% - 32px,720px);min-height:78px;margin:auto;display:flex;align-items:center}.brand{display:flex;align-items:center;gap:12px}.brand-logo-wrap{width:44px;height:44px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center}.brand-logo{width:36px;height:36px;border-radius:50%;object-fit:cover}.brand-name{margin:0;font-size:15px;font-weight:800;color:#fff}.brand-subtitle{margin:2px 0 0;color:rgba(255,255,255,.85);font-size:11px}.container{width:min(100% - 32px,720px);margin:22px auto 50px}.card{margin-bottom:16px;padding:20px;border:1px solid var(--border);border-radius:12px;background:var(--card-bg);box-shadow:var(--shadow)}.card-title{margin:0 0 13px;font-size:16px;font-weight:800}.client-name{margin:0 0 5px;font-size:15px;font-weight:800}.process-state{margin:0;color:var(--muted);font-size:13px}.feedback-list{display:grid;gap:12px}.feedback-item{padding:13px 15px;border-left:4px solid #2dd4bf;border-radius:0 7px 7px 0;background:var(--soft-bg)}.feedback-agent-item{padding:13px 15px;border-left:4px solid #2563eb;border-radius:0 7px 7px 0;background:#eff6ff}.feedback-meta{margin:0 0 7px;color:#0d9488;font-size:12px;font-weight:800}.feedback-agent-meta{margin:0 0 7px;color:#1d4ed8;font-size:12px;font-weight:800}.feedback-text{margin:0;font-size:14px;font-weight:700;line-height:1.55;white-space:pre-wrap}.feedback-reply{margin-top:9px;padding:10px 12px;border-left:3px solid #94a3b8;background:#fff}.feedback-reply-meta{margin:0 0 5px;color:#64748b;font-size:11px;font-weight:800}.feedback-reply-text{margin:0;font-size:13px;line-height:1.5;white-space:pre-wrap}.observation{padding:13px 15px;border-left:4px solid var(--primary);background:var(--soft-bg)}.observation-meta{margin:0 0 7px;color:var(--primary);font-size:12px;font-weight:800}.observation-text{margin:0;font-size:14px;font-weight:700;white-space:pre-wrap}.form-group{margin-top:17px}.label{display:block;margin-bottom:7px;color:var(--muted);font-size:13px;font-weight:700}.textarea,.select,.text-input{width:100%;border:1px solid var(--border);border-radius:8px;background:var(--soft-bg);color:var(--text);outline:none}.select,.text-input{height:46px;padding:0 13px}.textarea{min-height:120px;padding:13px;resize:vertical;line-height:1.55}.identity-box{width:100%;border:1px solid #99f6e4;border-radius:8px;background:var(--soft-bg);padding:13px;color:var(--text);font-size:14px;font-weight:800;line-height:1.45}.alt-link{margin-top:10px;padding:0;border:0;background:transparent;color:var(--primary-hover);font-size:12px;font-weight:800;text-decoration:underline;cursor:pointer}.secondary-button{min-height:42px;margin-top:10px;padding:0 16px;border:1px solid #99f6e4;border-radius:8px;background:var(--soft-bg);color:var(--primary-hover);font-weight:800;cursor:pointer}.submit-button{min-height:46px;margin-top:16px;padding:0 20px;border:0;border-radius:8px;background:var(--primary);color:#fff;font-weight:800;cursor:pointer}.submit-button:hover{background:var(--primary-hover)}.submit-button:disabled{opacity:.65;cursor:wait}.message{display:none;margin-top:14px;padding:11px 13px;border-radius:8px;font-size:13px;font-weight:700}.message.success{display:block;border:1px solid #86efac;background:#f0fdf4;color:#166534}.message.error{display:block;border:1px solid #fecaca;background:#fef2f2;color:#b91c1c}.loading{padding:30px;text-align:center;color:var(--muted)}.empty{color:var(--muted);font-size:13px}.hidden{display:none!important}@media(max-width:600px){.container,.header-inner{width:min(100% - 22px,720px)}.card{padding:17px}.submit-button{width:100%}}
+</style>
+</head>
+<body>
+<header class="header"><div class="header-inner"><div class="brand"><div class="brand-logo-wrap"><img src="logo.png" alt="RED" class="brand-logo"></div><div><p class="brand-name">Red Intelfon</p><p class="brand-subtitle">Observación de caso — Sistema de monitoreo de SLA</p></div></div></div></header>
+<main class="container">
+<div id="loading" class="card loading">Cargando información…</div>
+<div id="content" class="hidden">
+<section class="card"><h1 class="card-title">Caso <span id="caseId"></span></h1><p id="clientName" class="client-name"></p><p id="processState" class="process-state"></p></section>
+<section id="feedbackAgenteCard" class="card hidden"><h2 class="card-title">Retroalimentación del responsable</h2><div id="feedbackAgenteList" class="feedback-list"></div></section>
+<section id="vistaLider" class="card hidden"><h2 class="card-title">Observaciones anteriores</h2><div id="obsList" class="feedback-list"></div><form id="obsForm">
+<div id="ownerIdentity" class="form-group"><label class="label">Identificado automáticamente como</label><div id="autorIdentificado" class="identity-box"></div><button id="usarOtroUsuario" class="alt-link" type="button">No soy esta persona / Dar feedback como otra persona</button></div>
+<div id="otherIdentity" class="form-group hidden"><label class="label" for="correoAlterno">Verifica tu correo corporativo</label><p class="empty" style="margin-top:0">Usa únicamente un correo @red.com.gt o @red.com.sv. Te enviaremos un enlace para confirmar tu identidad.</p><input id="correoAlterno" class="text-input" type="email" placeholder="usuario@red.com.gt"><button id="enviarVerificacion" class="secondary-button" type="button">Enviar enlace de verificación</button><div id="messageVerificacion" class="message"></div><div id="correoVerificadoBox" class="hidden" style="margin-top:12px"><label class="label">Correo verificado</label><div id="correoVerificado" class="identity-box"></div><button id="volverIdentidadOriginal" class="alt-link" type="button">Volver a la identidad original</button></div></div>
+<div class="form-group"><label class="label" for="observacion">Tu observación</label><textarea id="observacion" class="textarea" maxlength="3000" placeholder="Escribe aquí tu observación sobre este caso. Se le avisará por correo al agente responsable." required></textarea></div><button id="submitLider" class="submit-button" type="submit">Guardar y avisar al agente</button><div id="messageLider" class="message"></div></form></section>
+<section id="vistaAgente" class="card hidden"><h2 class="card-title">Observación recibida</h2><div class="observation"><p class="observation-meta" id="agenteAutorRol"></p><p class="observation-text" id="agenteObservacionTexto"></p></div><div id="respuestaYaEnviada" class="hidden" style="margin-top:14px"><div class="feedback-reply"><p class="feedback-reply-meta">Tu respuesta</p><p class="feedback-reply-text" id="respuestaTexto"></p></div></div><form id="respuestaForm"><div class="form-group"><label class="label" for="respuesta">Tu respuesta</label><textarea id="respuesta" class="textarea" maxlength="3000" placeholder="Escribe aquí tu respuesta a la observación." required></textarea></div><button id="submitAgente" class="submit-button" type="submit">Enviar respuesta</button><div id="messageAgente" class="message"></div></form></section>
+</div>
+</main>
 <script>
-const API='https://erjmqjcjggxbktxcogkm.supabase.co/functions/v1/observacion-lider-api',p=new URLSearchParams(location.search),token=p.get('token');let ctx=null,mode='owner',access=(new URLSearchParams(location.hash.slice(1))).get('access_token')||'';
-async function req(body,auth){const h={'Content-Type':'application/json'};if(auth)h.Authorization='Bearer '+auth;const r=await fetch(API,{method:'POST',headers:h,body:JSON.stringify(body)}),j=await r.json();if(!r.ok||!j?.ok)throw new Error(j?.error||'Error');return j}
-async function init(){try{const r=await fetch(API+'?token='+encodeURIComponent(token)),j=await r.json();if(!r.ok||!j?.ok)throw new Error(j?.error||'Error');ctx=j.data;caseEl.textContent=ctx.case_id||'—';client.textContent=(ctx.cliente_nombre||'')+' · '+(ctx.pais||'');state.textContent='Estado actual: '+(ctx.estado_actual||'—');who.textContent=(ctx.autor_nombre||ctx.autor_correo)+' · '+ctx.autor_correo+' · '+(ctx.autor_rol||'');hist.innerHTML=(ctx.observaciones||[]).map(x=>'<p><b>'+(x.autor_correo||x.autor_rol||'')+'</b><br>'+(x.observacion||'')+'</p>').join('')||'<p class="muted">Aún no hay observaciones para este caso.</p>';if(access){mode='other';owner.classList.add('hide');alt.classList.remove('hide');verified.classList.remove('hide');verifiedWho.textContent='Correo corporativo verificado';}load.classList.add('hide');app.classList.remove('hide')}catch(e){load.textContent=e.message}}
-const caseEl=document.getElementById('case');
-other.onclick=()=>{mode='other';owner.classList.add('hide');alt.classList.remove('hide')};back.onclick=()=>{mode='owner';alt.classList.add('hide');owner.classList.remove('hide')};
-send.onclick=async()=>{try{const e=email.value.trim().toLowerCase();const red=location.origin+location.pathname+'?token='+encodeURIComponent(token)+'&modo=otro';await req({action:'solicitar_verificacion',token,email:e,redirect_to:red});verify.textContent='Te enviamos un enlace de verificación a '+e+'.';}catch(e){verify.textContent=e.message}};
-save.onclick=async()=>{try{const o=obs.value.trim();if(o.length<3)throw new Error('Escribe una observación válida.');if(mode==='owner')await req({action:'guardar_observacion',token,observacion:o});else{if(!access)throw new Error('Primero verifica tu correo corporativo.');await req({action:'guardar_observacion_verificada',token,observacion:o},access)}msg.textContent='Observación guardada. Se avisó al agente.';obs.value=''}catch(e){msg.textContent=e.message}};init();
-</script></body></html>
+const API='https://erjmqjcjggxbktxcogkm.supabase.co/functions/v1/observacion-lider-api';
+const params=new URLSearchParams(location.search);
+const token=params.get('token');
+const hashParams=new URLSearchParams(location.hash.slice(1));
+const accessToken=hashParams.get('access_token')||'';
+const loading=document.getElementById('loading');
+const content=document.getElementById('content');
+let leaderMode='owner';
+
+function formatDate(v){if(!v)return'';return new Intl.DateTimeFormat('es-GT',{dateStyle:'medium',timeStyle:'short'}).format(new Date(v))}
+function showMessage(el,t,type){el.textContent=t;el.className='message '+type}
+function clearMessage(el){el.textContent='';el.className='message'}
+function renderCabecera(ctx){document.getElementById('caseId').textContent=ctx.case_id||'—';document.getElementById('clientName').textContent=(ctx.cliente_nombre||'Cliente no informado')+' · '+(ctx.pais||'—');document.getElementById('processState').textContent='Estado actual: '+(ctx.estado_actual||'—')}
+function renderFeedbackAgente(items){const card=document.getElementById('feedbackAgenteCard'),list=document.getElementById('feedbackAgenteList');list.innerHTML='';if(!items||!items.length){card.classList.add('hidden');return}card.classList.remove('hidden');for(const it of items){const a=document.createElement('article');a.className='feedback-agent-item';const m=document.createElement('p');m.className='feedback-agent-meta';const etapa=it.tipo_alerta==='etapa'&&it.etapa?' · Etapa: '+it.etapa:'';m.textContent=(it.autor_email||'Responsable')+' · '+formatDate(it.creado_en)+etapa;const t=document.createElement('p');t.className='feedback-text';t.textContent=it.comentario||'';a.append(m,t);list.appendChild(a)}}
+function renderVistaLider(ctx){
+  document.getElementById('vistaLider').classList.remove('hidden');
+  renderFeedbackAgente(ctx.retroalimentaciones_agente||[]);
+  document.getElementById('autorIdentificado').textContent=(ctx.autor_nombre||ctx.autor_correo||'Usuario')+' · '+(ctx.autor_correo||'')+' · '+(ctx.autor_rol||'');
+  const list=document.getElementById('obsList');list.innerHTML='';
+  const items=ctx.observaciones||[];
+  if(!items.length){const e=document.createElement('p');e.className='empty';e.textContent='Aún no hay observaciones para este caso.';list.appendChild(e)}
+  for(const it of items){const a=document.createElement('article');a.className='feedback-item';const m=document.createElement('p');m.className='feedback-meta';m.textContent=(it.autor_correo||it.autor_rol)+' · '+formatDate(it.creado_en);const t=document.createElement('p');t.className='feedback-text';t.textContent=it.observacion;a.append(m,t);if(it.respuesta_agente){const r=document.createElement('div');r.className='feedback-reply';const rm=document.createElement('p');rm.className='feedback-reply-meta';rm.textContent='Respuesta del agente · '+formatDate(it.respuesta_en);const rt=document.createElement('p');rt.className='feedback-reply-text';rt.textContent=it.respuesta_agente;r.append(rm,rt);a.appendChild(r)}list.appendChild(a)}
+  if(accessToken||params.get('modo')==='otro'){activarModoOtro();}
+}
+function renderVistaAgente(ctx){document.getElementById('vistaAgente').classList.remove('hidden');document.getElementById('agenteAutorRol').textContent='Observación de: '+(ctx.autor_correo||ctx.autor_rol||'—');document.getElementById('agenteObservacionTexto').textContent=ctx.observacion||'';if(ctx.respuesta_agente){document.getElementById('respuestaYaEnviada').classList.remove('hidden');document.getElementById('respuestaTexto').textContent=ctx.respuesta_agente;document.getElementById('respuestaForm').classList.add('hidden')}}
+async function apiGet(){const r=await fetch(API+'?token='+encodeURIComponent(token),{cache:'no-store'});const j=await r.json().catch(()=>null);if(!r.ok||!j?.ok)throw new Error(j?.error||'No fue posible abrir este enlace.');return j.data}
+async function apiPost(body,bearer=''){const headers={'Content-Type':'application/json'};if(bearer)headers.Authorization='Bearer '+bearer;const r=await fetch(API,{method:'POST',headers,body:JSON.stringify(body)});const j=await r.json().catch(()=>null);if(!r.ok||!j?.ok)throw new Error(j?.error||'No fue posible completar la acción.');return j}
+function decodeEmail(jwt){try{const p=JSON.parse(atob(jwt.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')));return p.email||''}catch{return''}}
+function activarModoOtro(){
+  leaderMode='other';
+  document.getElementById('ownerIdentity').classList.add('hidden');
+  document.getElementById('otherIdentity').classList.remove('hidden');
+  if(accessToken){
+    const email=decodeEmail(accessToken);
+    document.getElementById('correoVerificado').textContent=(email||'Correo corporativo')+' · Usuario corporativo verificado';
+    document.getElementById('correoVerificadoBox').classList.remove('hidden');
+    showMessage(document.getElementById('messageVerificacion'),'Correo verificado correctamente.','success');
+  }
+}
+function activarModoOwner(){
+  leaderMode='owner';
+  document.getElementById('otherIdentity').classList.add('hidden');
+  document.getElementById('ownerIdentity').classList.remove('hidden');
+}
+async function loadContext(){if(!token){loading.textContent='El enlace no contiene un token válido.';return}try{const data=await apiGet();if(!data||data.error)throw new Error(data?.error||'El enlace no existe o ya no está disponible.');renderCabecera(data);if(data.vista==='lider')renderVistaLider(data);else renderVistaAgente(data);loading.classList.add('hidden');content.classList.remove('hidden')}catch(e){console.error(e);loading.textContent=e.message||'No fue posible abrir este enlace.'}}
+
+document.getElementById('usarOtroUsuario').addEventListener('click',activarModoOtro);
+document.getElementById('volverIdentidadOriginal').addEventListener('click',activarModoOwner);
+
+document.getElementById('enviarVerificacion').addEventListener('click',async()=>{
+  const msg=document.getElementById('messageVerificacion');clearMessage(msg);
+  const email=document.getElementById('correoAlterno').value.trim().toLowerCase();
+  if(!/^[^@\s]+@red\.com\.(gt|sv)$/i.test(email)){showMessage(msg,'Usa un correo corporativo @red.com.gt o @red.com.sv.','error');return}
+  const b=document.getElementById('enviarVerificacion');b.disabled=true;b.textContent='Enviando…';
+  try{
+    const redirectTo=location.origin+location.pathname+'?token='+encodeURIComponent(token)+'&modo=otro';
+    await apiPost({action:'solicitar_verificacion',token,email,redirect_to:redirectTo});
+    showMessage(msg,'Te enviamos un enlace de verificación. Ábrelo desde tu correo y volverás a este formulario.','success');
+  }catch(err){showMessage(msg,err.message||'No fue posible enviar el enlace.','error')}
+  finally{b.disabled=false;b.textContent='Enviar enlace de verificación'}
+});
+
+document.getElementById('obsForm').addEventListener('submit',async e=>{
+  e.preventDefault();
+  const msg=document.getElementById('messageLider');clearMessage(msg);
+  const obs=document.getElementById('observacion').value.trim();
+  if(obs.length<3){showMessage(msg,'Escribe una observación de al menos 3 caracteres.','error');return}
+  const b=document.getElementById('submitLider');b.disabled=true;b.textContent='Guardando…';
+  try{
+    if(leaderMode==='owner'){
+      await apiPost({action:'guardar_observacion',token,observacion:obs});
+    }else{
+      if(!accessToken)throw new Error('Primero debes verificar tu correo corporativo.');
+      await apiPost({action:'guardar_observacion_verificada',token,observacion:obs},accessToken);
+    }
+    document.getElementById('observacion').value='';
+    showMessage(msg,'Observación guardada. Se le avisó al agente por correo.','success');
+    await loadContext();
+  }catch(err){showMessage(msg,err.message||'No fue posible guardar la observación.','error')}
+  finally{b.disabled=false;b.textContent='Guardar y avisar al agente'}
+});
+
+document.getElementById('respuestaForm').addEventListener('submit',async e=>{e.preventDefault();const msg=document.getElementById('messageAgente');clearMessage(msg);const respuesta=document.getElementById('respuesta').value.trim();if(respuesta.length<3){showMessage(msg,'Escribe una respuesta de al menos 3 caracteres.','error');return}const b=document.getElementById('submitAgente');b.disabled=true;b.textContent='Enviando…';try{await apiPost({action:'guardar_respuesta',token,respuesta});showMessage(msg,'Respuesta enviada correctamente.','success');await loadContext()}catch(err){showMessage(msg,err.message||'No fue posible enviar la respuesta.','error')}finally{b.disabled=false;b.textContent='Enviar respuesta'}})
+loadContext();
+</script>
+</body></html>
