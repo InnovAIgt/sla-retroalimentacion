@@ -19,7 +19,7 @@
 <section id="vistaLider" class="card hidden"><h2 class="card-title">Observaciones anteriores</h2><div id="obsList" class="feedback-list"></div><form id="obsForm">
 <div id="ownerIdentity" class="form-group"><label class="label">Identificado automáticamente como</label><div id="autorIdentificado" class="identity-box"></div><button id="usarOtroUsuario" class="alt-link" type="button">No soy esta persona / Dar feedback como otra persona</button></div>
 <div id="otherIdentity" class="form-group hidden"><label class="label" for="correoAlterno">Verifica tu correo corporativo</label><p class="empty" style="margin-top:0">Usa únicamente un correo @red.com.gt o @red.com.sv. Te enviaremos un enlace para confirmar tu identidad.</p><input id="correoAlterno" class="text-input" type="email" placeholder="usuario@red.com.gt"><button id="enviarVerificacion" class="secondary-button" type="button">Enviar enlace de verificación</button><div id="messageVerificacion" class="message"></div><div id="correoVerificadoBox" class="hidden" style="margin-top:12px"><label class="label">Correo verificado</label><div id="correoVerificado" class="identity-box"></div><button id="volverIdentidadOriginal" class="alt-link" type="button">Volver a la identidad original</button></div></div>
-<div class="form-group"><label class="label" for="observacion">Tu observación</label><textarea id="observacion" class="textarea" maxlength="3000" placeholder="Escribe aquí tu observación sobre este caso. Se le avisará por correo al agente responsable." required></textarea></div><button id="submitLider" class="submit-button" type="submit">Guardar y avisar al agente</button><div id="messageLider" class="message"></div></form></section>
+<div class="form-group"><label class="label" for="observacion">Tu observación</label><textarea id="observacion" class="textarea" maxlength="3000" placeholder="Escribe aquí tu observación sobre este caso." required></textarea></div><button id="submitLider" class="submit-button" type="submit">Guardar</button><div id="messageLider" class="message"></div></form></section>
 <section id="vistaAgente" class="card hidden"><h2 class="card-title">Observación recibida</h2><div class="observation"><p class="observation-meta" id="agenteAutorRol"></p><p class="observation-text" id="agenteObservacionTexto"></p></div><div id="respuestaYaEnviada" class="hidden" style="margin-top:14px"><div class="feedback-reply"><p class="feedback-reply-meta">Tu respuesta</p><p class="feedback-reply-text" id="respuestaTexto"></p></div></div><form id="respuestaForm"><div class="form-group"><label class="label" for="respuesta">Tu respuesta</label><textarea id="respuesta" class="textarea" maxlength="3000" placeholder="Escribe aquí tu respuesta a la observación." required></textarea></div><button id="submitAgente" class="submit-button" type="submit">Enviar respuesta</button><div id="messageAgente" class="message"></div></form></section>
 </div>
 </main>
@@ -100,10 +100,10 @@ document.getElementById('obsForm').addEventListener('submit',async e=>{
       await apiPost({action:'guardar_observacion_verificada',token,observacion:obs},accessToken);
     }
     document.getElementById('observacion').value='';
-    showMessage(msg,'Observación guardada. Se le avisó al agente por correo.','success');
+    showMessage(msg,'Observación guardada.','success');
     await loadContext();
   }catch(err){showMessage(msg,err.message||'No fue posible guardar la observación.','error')}
-  finally{b.disabled=false;b.textContent='Guardar y avisar al agente'}
+  finally{b.disabled=false;b.textContent='Guardar'}
 });
 
 document.getElementById('respuestaForm').addEventListener('submit',async e=>{e.preventDefault();const msg=document.getElementById('messageAgente');clearMessage(msg);const respuesta=document.getElementById('respuesta').value.trim();if(respuesta.length<3){showMessage(msg,'Escribe una respuesta de al menos 3 caracteres.','error');return}const b=document.getElementById('submitAgente');b.disabled=true;b.textContent='Enviando…';try{await apiPost({action:'guardar_respuesta',token,respuesta});showMessage(msg,'Respuesta enviada correctamente.','success');await loadContext()}catch(err){showMessage(msg,err.message||'No fue posible enviar la respuesta.','error')}finally{b.disabled=false;b.textContent='Enviar respuesta'}})
