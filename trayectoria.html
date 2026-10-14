@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Trayectoria del reclamo · SLA</title>
+<style>
+:root{color-scheme:light;--bg:#eef2f7;--surface:#fff;--soft:#f8fafc;--border:#dbe3ee;--text:#0f172a;--muted:#64748b;--red:#991b1b;--red-soft:#fee2e2;--purple:#6d28d9;--purple-soft:#f5f3ff;--green:#166534;--green-soft:#dcfce7;--shadow:0 10px 28px rgba(15,23,42,.09)}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.header{background:linear-gradient(135deg,#450a0a,#991b1b 65%,#b91c1c);color:#fff}.header-inner{width:min(100% - 32px,860px);margin:auto;padding:22px 0}.brand{display:flex;align-items:center;gap:12px}.brand-mark{width:42px;height:42px;border-radius:50%;background:#fff;display:grid;place-items:center;overflow:hidden}.brand-mark img{width:36px;height:36px;border-radius:50%;object-fit:cover}.brand-name{margin:0;font-size:15px;font-weight:800}.brand-subtitle{margin:2px 0 0;color:#fecaca;font-size:11px}.container{width:min(100% - 32px,860px);margin:24px auto 50px}.card{padding:20px;margin-bottom:16px;background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow)}.case-title{margin:0 0 4px;font-size:22px}.case-meta{margin:0;color:var(--muted);font-size:13px}.case-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}.stat{padding:11px 12px;border:1px solid var(--border);border-left:4px solid var(--purple);border-radius:8px;background:var(--soft)}.stat-label{display:block;color:var(--muted);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.04em}.stat-value{display:block;margin-top:4px;font-size:14px;font-weight:800}.history-card{background:var(--purple-soft);border-color:#ddd6fe}.history-card h2{margin:0;font-size:17px}.history-card p{margin:5px 0 14px;color:var(--muted);font-size:12px;line-height:1.5}.timeline{overflow-x:auto;border:1px solid var(--border);border-radius:8px;background:#fff}.timeline table{width:100%;min-width:750px;border-collapse:collapse}.timeline th{padding:9px 8px;background:#f1f5f9;color:#334155;text-align:left;font-size:10px;white-space:nowrap}.timeline td{padding:10px 8px;border-bottom:1px solid #e2e8f0;font-size:11px;vertical-align:top}.timeline tr:last-child td{border-bottom:0}.stage{font-weight:800}.status{display:inline-block;padding:4px 7px;border-radius:999px;background:var(--green-soft);color:var(--green);font-size:10px;font-weight:800;white-space:nowrap}.status.late{background:var(--red-soft);color:var(--red)}.notice{padding:11px 12px;border:1px solid #fde68a;border-radius:8px;background:#fffbeb;color:#92400e;font-size:12px}.error{border-color:#fecaca;background:#fef2f2;color:#b91c1c}.footer{text-align:center;color:var(--muted);font-size:11px}@media(max-width:650px){.container,.header-inner{width:min(100% - 20px,860px)}.case-grid{grid-template-columns:1fr}.card{padding:16px}.case-title{font-size:19px}}
+</style>
+</head>
+<body>
+<header class="header"><div class="header-inner"><div class="brand"><div class="brand-mark"><img src="logo.png" alt="RED"></div><div><p class="brand-name">Red Intelfon</p><p class="brand-subtitle">Trayectoria del reclamo · Sistema de monitoreo SLA</p></div></div></div></header>
+<main class="container">
+<section id="loading" class="card">Cargando la trayectoria del reclamo…</section>
+<div id="content" hidden>
+<section class="card">
+<h1 class="case-title">Caso <span id="caseId">—</span></h1>
+<p id="caseMeta" class="case-meta">—</p>
+<div class="case-grid">
+<div class="stat"><span class="stat-label">Etapa actual</span><span id="state" class="stat-value">—</span></div>
+<div class="stat"><span class="stat-label">Responsable actual</span><span id="agent" class="stat-value">—</span></div>
+<div class="stat"><span class="stat-label">Última actualización</span><span id="updated" class="stat-value">—</span></div>
+</div>
+</section>
+<section class="card history-card">
+<h2>Trayectoria del reclamo</h2>
+<p>Etapas registradas por SAC, responsable, tiempo consumido y límite SLA. El tiempo se calcula en días hábiles de lunes a viernes.</p>
+<div id="notice" class="notice" hidden></div>
+<div id="timeline" class="timeline"></div>
+</section>
+<p class="footer">Este enlace es personal y temporal. No lo compartas.</p>
+</div>
+</main>
+<script>
+const API='https://erjmqjcjggxbktxcogkm.supabase.co/functions/v1/observacion-lider-api';
+const TZ='America/Guatemala';
+const LIMITS={'Nueva Solicitud':1,'Primer Contacto':1,'Diagnóstico':1,'Ejecución':1,'Control de Calidad':1,'Listo - pendiente entrega cliente':2};
+const params=new URLSearchParams(location.search);
+const token=params.get('token')||'';
+const loading=document.getElementById('loading');
+const content=document.getElementById('content');
+
+function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function norm(v){return String(v==null?'':v).trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
+function arr(v){if(Array.isArray(v))return v.filter(function(x){return x&&typeof x==='object'});return[]}
+function limit(stage){return Number(LIMITS[String(stage||'').trim()]||1)}
+function assignee(v){var s=String(v||'').replace(/\s+/g,' ').trim();var patterns=[/asignado a:\s*([^|]+)/i,/reasignado a agente(?: id)?:\s*([^|]+)/i,/se asigna a\s+([^,.|]+)/i,/asignado a\s+([^,.|]+)/i];for(var i=0;i<patterns.length;i++){var m=s.match(patterns[i]);if(m&&m[1]&&!/^datos cliente/i.test(m[1]))return m[1].trim()}return''}
+function weekday(d){return new Intl.DateTimeFormat('en-US',{timeZone:TZ,weekday:'short'}).format(d)}
+function businessMinutes(a,b){var start=new Date(a).getTime(),end=new Date(b).getTime();if(!Number.isFinite(start)||!Number.isFinite(end)||end<=start)return 0;var hour=3600000,t=start,total=0;while(t<end){var next=Math.min(end,(Math.floor(t/hour)+1)*hour);var day=weekday(new Date(t));if(day!=='Sat'&&day!=='Sun')total+=(next-t)/60000;t=next}return Math.round(total)}
+function date(v){var d=new Date(v);if(!Number.isFinite(d.getTime()))return'—';return new Intl.DateTimeFormat('es-GT',{timeZone:TZ,day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}).format(d)}
+function duration(m){var h=Math.max(0,Number(m)||0)/60,d=h/24;return d>=1?d.toFixed(1)+' días hábiles · '+Math.round(h)+' h':Math.round(h)+' h'}
+function segments(ctx){var events=arr(ctx.historial).map(function(e){return{stage:String(e.estado_nuevo||e.estado||'').trim(),at:new Date(e.fechayhora||e.fecha||e.created_at),detail:String(e.detalle||'')}}).filter(function(e){return e.stage&&Number.isFinite(e.at.getTime())}).sort(function(a,b){return a.at-b.at});var out=[],current=(ctx.agente&&ctx.agente.nombre)||'—';for(var i=0;i<events.length;i++){var e=events[i],who=assignee(e.detail);if(who)current=who;var prev=out[out.length-1];if(prev&&norm(prev.stage)===norm(e.stage)){if(who)prev.responsible=who;if(e.detail)prev.detail=e.detail;continue}out.push({stage:e.stage,start:e.at,responsible:who||current,detail:e.detail})}if(!out.length&&ctx.estado_actual)out.push({stage:ctx.estado_actual,start:new Date(ctx.fecha_creacion||ctx.fecha_actualizacion||Date.now()),responsible:(ctx.agente&&ctx.agente.nombre)||'—',detail:''});var expired=arr(ctx.etapas_vencidas).map(function(x){return norm(x)});return out.map(function(s,i){var end=out[i+1]?out[i+1].start:new Date();var mins=businessMinutes(s.start,end);var late=expired.indexOf(norm(s.stage))>=0||(norm(s.stage)===norm(ctx.estado_actual)&&ctx.sla&&ctx.sla.vencido_por_etapa===true)||mins>limit(s.stage)*24*60;return{stage:s.stage,start:s.start,end:end,responsible:s.responsible,minutes:mins,limit:limit(s.stage),late:late}})}
+function render(ctx){document.title='Trayectoria '+(ctx.case_id||'reclamo')+' · SLA';document.getElementById('caseId').textContent=ctx.case_id||'—';document.getElementById('caseMeta').textContent=(ctx.cliente_nombre||'Cliente no informado')+' · '+(ctx.pais||'—')+' · '+(ctx.categoria_nombre||'SAC');document.getElementById('state').textContent=ctx.estado_actual||'—';document.getElementById('agent').textContent=(ctx.agente&&ctx.agente.nombre)||'—';document.getElementById('updated').textContent=date(ctx.fecha_actualizacion);var note=document.getElementById('notice');if(ctx.historial_error){note.hidden=false;note.textContent='SAC no devolvió el historial detallado en esta consulta. Se muestra la información disponible del caso.'}var list=segments(ctx),rows=list.map(function(s){var status=s.late?'VENCIDA':'Dentro del límite';return'<tr><td class="stage">'+esc(s.stage)+'</td><td>'+esc(s.responsible||'—')+'</td><td>'+esc(date(s.start))+'</td><td>'+esc(date(s.end))+'</td><td>'+esc(duration(s.minutes))+'</td><td>'+s.limit+' día'+(s.limit===1?'':'s')+' hábil'+(s.limit===1?'':'es')+'</td><td><span class="status'+(s.late?' late':'')+'">'+status+'</span></td></tr>'}).join('');document.getElementById('timeline').innerHTML='<table><thead><tr><th>ETAPA</th><th>RESPONSABLE</th><th>INICIO</th><th>FIN</th><th>TIEMPO EN ETAPA</th><th>LÍMITE SLA</th><th>ESTADO</th></tr></thead><tbody>'+(rows||'<tr><td colspan="7">No hay movimientos de etapa disponibles.</td></tr>')+'</tbody></table>'}
+async function load(){if(!token){loading.className='card notice error';loading.textContent='El enlace no contiene un token válido.';return}try{var r=await fetch(API+'?token='+encodeURIComponent(token),{cache:'no-store'}),j=await r.json().catch(function(){return null});if(!r.ok||!j||!j.ok||!j.data)throw new Error((j&&j.error)||'El enlace no existe o ya no está disponible.');render(j.data);loading.hidden=true;content.hidden=false}catch(e){loading.className='card notice error';loading.textContent=e.message||'No fue posible cargar la trayectoria.'}}
+load();
+</script>
+</body>
+</html>
